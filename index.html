@@ -548,7 +548,9 @@ body[data-open="true"] #hero {
   transform: translateX(-20px);
 }
 
-body[data-open="true"]:not([data-cinema="true"]) #scene { left: 0; right: min(550px, 94vw); }
+@media (min-width: 821px) {
+  body[data-open="true"]:not([data-cinema="true"]) #scene { left: 0; right: min(550px, 94vw); }
+}
 body[data-open="true"] #scene-caption { opacity: 0; }
 
 #fortune-panel {
@@ -1254,7 +1256,7 @@ body[data-cinema="true"] #exit-cinema { display: grid; }
   body[data-open="true"]:not([data-cinema="true"]) #scene { right: 500px; }
 }
 
-@media (max-width: 1100px) {
+@media (min-width: 821px) and (max-width: 1100px) {
   #topbar { margin: 0 25px; gap: 13px; }
   .brand-name { font-size: 16px; }
   .brand-name small { font-size: 8px; }
@@ -1399,22 +1401,33 @@ body[data-cinema="true"] #exit-cinema { display: grid; }
 
   #reset svg { width: 13px; }
 
+  body[data-open="true"]:not([data-cinema="true"]) #scene,
   body[data-open="true"] #scene {
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: calc(48svh + 14px);
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: calc(48svh + 14px) !important;
+    width: 100vw !important;
+  }
+
+  body[data-open="true"] #topbar {
+    height: 52px;
+    padding: 6px 0;
+  }
+
+  body[data-open="true"] #topbar .mode-nav {
+    display: none;
   }
 
   #fortune-panel {
-    left: 16px;
-    right: 16px;
+    left: 12px;
+    right: 12px;
     top: auto;
-    bottom: 14px;
+    bottom: 12px;
     width: auto;
     max-height: 48svh;
-    min-height: 260px;
-    border-radius: 12px;
+    min-height: 250px;
+    border-radius: 16px;
     transform: translateY(calc(100% + 40px));
   }
 
@@ -4250,7 +4263,7 @@ function createFortuneScene() {
 
     const target = new THREE.Vector3(
       cookie.base.x,
-      1.16,
+      1.52,
       cookie.base.z
     );
 
@@ -4258,14 +4271,20 @@ function createFortuneScene() {
       .sub(controls.target)
       .normalize();
 
-    direction.y = Math.max(.5, direction.y);
+    direction.y = Math.max(.45, direction.y);
     direction.normalize();
 
-    const zoomDist = F.state.cinema ? Math.max(7.8, 6.4 / camera.aspect) : Math.max(7.0, 5.6 / camera.aspect);
+    const zoomDist = F.state.cinema ? Math.max(7.8, 6.6 / camera.aspect) : Math.max(7.2, 5.8 / camera.aspect);
     const position = target.clone().addScaledVector(
       direction,
       zoomDist
     );
+
+    // Turn cookie to face camera directly so the crack is front-facing (never sideways / z boku)
+    const camAngle = Math.atan2(direction.x, direction.z);
+    let turnAngle = camAngle - cookie.base.rotation;
+    while (turnAngle > Math.PI) turnAngle -= Math.PI * 2;
+    while (turnAngle < -Math.PI) turnAngle += Math.PI * 2;
 
     paper.visible = true;
 
@@ -4294,6 +4313,7 @@ function createFortuneScene() {
 
     timeline.to(cookie.pose, {
       lift: 1.2,
+      turn: turnAngle,
       duration: .85 * duration,
       ease: 'power2.inOut'
     }, 0);
@@ -4407,11 +4427,11 @@ function createFortuneScene() {
       controls.target.copy(goal.target);
     } else if (selected && !timeline) {
       const cookie = selected;
-      const target = new THREE.Vector3(cookie.base.x, 1.16, cookie.base.z);
+      const target = new THREE.Vector3(cookie.base.x, 1.52, cookie.base.z);
       const direction = camera.position.clone().sub(controls.target).normalize();
-      direction.y = Math.max(.5, direction.y);
+      direction.y = Math.max(.45, direction.y);
       direction.normalize();
-      const zoomDist = F.state.cinema ? Math.max(7.8, 6.4 / camera.aspect) : Math.max(7.0, 5.6 / camera.aspect);
+      const zoomDist = F.state.cinema ? Math.max(7.8, 6.6 / camera.aspect) : Math.max(7.2, 5.8 / camera.aspect);
       camera.position.copy(target.clone().addScaledVector(direction, zoomDist));
       controls.target.copy(target);
     }
@@ -4662,8 +4682,10 @@ function createFortuneScene() {
       paper.position.set(
         selected.group.position.x,
         selected.group.position.y + .62 + paperPose.rise * .22,
-        selected.group.position.z + .08
+        selected.group.position.z
       );
+      const toCam = camera.position.clone().sub(paper.position).normalize();
+      paper.position.addScaledVector(toCam, 0.12);
 
       paper.quaternion.copy(camera.quaternion);
 
