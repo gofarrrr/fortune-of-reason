@@ -1,0 +1,4767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c0e12">
+<meta name="description" content="Ten rituals for independent thinking in the age of AI. Grounded in cognitive science, distilled through the craftsman philosophy of Kevin Kelly.">
+<title>The Fortune of Reason — Dekalog poznawczy pracy z AI</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpolygon points='24,4 27.5,18.5 42,15 31.5,25.5 42,36 27.5,32.5 24,47 20.5,32.5 6,36 16.5,25.5 6,15 20.5,18.5' fill='%23d4a359'/%3E%3Ccircle cx='24' cy='25.5' r='3.5' fill='%23faf6ee'/%3E%3C/svg%3E">
+<meta property="og:title" content="The Fortune of Reason — Dekalog poznawczy pracy z AI">
+<meta property="og:description" content="10 rituals for independent thinking in the age of AI. Grounded in cognitive science and distilled through the craftsman philosophy of Kevin Kelly.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Fortune of Reason — Dekalog poznawczy pracy z AI">
+<meta name="twitter:description" content="10 rituals for independent thinking in the age of AI. Grounded in cognitive science and distilled through the craftsman philosophy of Kevin Kelly.">
+
+<!--
+  The Fortune of Reason — Three.js r170 / GSAP 3.12.5.
+
+  This source uses a pinned CDN import map and needs a network connection
+  for these libraries, but never fetches models, textures, fonts, or audio.
+
+  Help → Save offline edition embeds the libraries in a new, genuinely
+  offline index.html. All geometry, textures and sounds are procedural
+  in both editions.
+
+  DEKALOG_DATA contains the supplied editorial text; research qualifications
+  are stored separately in RESEARCH_NOTES.
+-->
+
+<script type="importmap" id="import-map">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+    "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js"
+  }
+}
+</script>
+
+<style>
+:root {
+  color-scheme: dark;
+  --bg: #0c0e12;
+  --surface: #161920;
+  --paper: #faf6ee;
+  --ink: #f1eadf;
+  --muted: #b8b3ab;
+  --gold: #d4a359;
+  --line: #ffffff28;
+  --serif: Charter, "Bitstream Charter", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "SFMono-Regular", Consolas, Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font: 16px/1.6 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body[data-mode="tray"] { overflow: hidden; }
+
+button, a, input { touch-action: manipulation; }
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: none;
+  min-height: 44px;
+}
+
+button:disabled { opacity: .4; cursor: wait; }
+
+a { color: inherit; text-underline-offset: 4px; }
+
+button:focus-visible,
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 5px;
+}
+
+button:hover { color: var(--paper); }
+
+button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.45;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3 { font-weight: 400; }
+::selection { background: #d4a35966; color: white; }
+[hidden] { display: none !important; }
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip {
+  position: fixed;
+  top: -80px;
+  left: 20px;
+  z-index: 1000;
+  padding: 12px 20px;
+  background: var(--paper);
+  color: var(--bg);
+}
+
+.skip:focus { top: 10px; }
+
+.mono {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.gold { color: var(--gold); }
+.quiet { color: var(--muted); }
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gold);
+  font: 12px/1.5 var(--mono);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.eyebrow::before {
+  content: "";
+  height: 1px;
+  width: 26px;
+  background: currentColor;
+}
+
+#topbar {
+  height: 92px;
+  position: relative;
+  z-index: 30;
+  margin: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand-mark {
+  width: 36px;
+  height: 36px;
+  stroke: var(--gold);
+  fill: none;
+  stroke-width: 1.05;
+}
+
+.brand-name { font: 22px/1.12 var(--serif); }
+
+.brand-name small {
+  display: block;
+  font: 11px var(--mono);
+  letter-spacing: .18em;
+  color: var(--muted);
+  margin-top: 5px;
+  text-transform: uppercase;
+}
+
+.mode-nav {
+  display: flex;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: rgba(255,255,255,0.04);
+  gap: 3px;
+}
+
+.mode-nav button {
+  min-height: 40px;
+  padding: 0 20px;
+  border-radius: 40px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mode-nav button[aria-pressed="true"] {
+  background: #25262b;
+  color: var(--paper);
+}
+
+.tools { display: flex; align-items: center; gap: 4px; }
+
+.icon-button {
+  width: 42px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--muted);
+}
+
+.icon-button:hover { background: #ffffff07; }
+.icon-button[aria-pressed="true"] { color: var(--gold); }
+
+#language {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: 12.5px var(--mono);
+  font-weight: 700;
+  letter-spacing: .08em;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: unset;
+}
+
+#language:hover {
+  border-color: rgba(212, 163, 89, 0.4);
+}
+
+#language .lang-opt {
+  transition: color 0.2s;
+}
+
+#language .lang-opt.active {
+  color: var(--gold);
+}
+
+#language .lang-sep {
+  opacity: 0.35;
+  font-weight: 400;
+}
+
+.divider {
+  height: 18px;
+  border-left: 1px solid var(--line);
+  margin: 0 7px;
+}
+
+#trayView {
+  position: relative;
+  height: calc(100svh - 92px);
+  min-height: 440px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+#scene {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 100px;
+  transition: right .8s cubic-bezier(.2, .7, .2, 1);
+  z-index: 0;
+}
+
+#canvasMount,
+#canvasMount canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#canvasMount { position: absolute; inset: 0; }
+#canvasMount canvas { touch-action: none; outline: none; }
+
+#scene::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    var(--bg),
+    transparent 15%,
+    transparent 90%,
+    var(--bg)
+  );
+}
+
+#hero {
+  position: absolute;
+  z-index: 2;
+  top: 19%;
+  left: 6%;
+  width: 34%;
+  max-width: min(540px, 94vw);
+  pointer-events: none;
+  transition: opacity .5s, transform .6s;
+}
+
+#hero h1 {
+  font: clamp(43px, 4.4vw, 72px)/1.05 var(--serif);
+  letter-spacing: -.044em;
+  margin: 25px 0 26px;
+}
+
+#hero h1 em {
+  color: var(--gold);
+  font-weight: 400;
+  display: block;
+}
+
+#hero .intro {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #aca8a1;
+  max-width: 300px;
+}
+
+#hero .primary { pointer-events: auto; margin-top: 32px; }
+
+.primary {
+  background: var(--gold);
+  color: #1b140b;
+  border: 1px solid var(--gold);
+  padding: 12px 23px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  font-size: 12px;
+  border-radius: 4px;
+  transition: background .2s, transform .2s;
+}
+
+.primary:hover {
+  background: #e8bc7b;
+  color: #171008;
+  transform: translateY(-1px);
+}
+
+.primary svg { width: 16px; }
+
+.text-button {
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  padding: 9px 0;
+}
+
+.text-button:hover { color: var(--gold); }
+
+.under-note {
+  font: 11px var(--mono);
+  letter-spacing: .08em;
+  color: #b5b0a6;
+  margin-top: 17px;
+}
+
+#scene-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 111px;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: #b5b0a6;
+  font: 12px var(--mono);
+  letter-spacing: .08em;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+
+#load-status {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 12px;
+  z-index: 3;
+  color: var(--muted);
+  pointer-events: none;
+  font: 11px/1.6 var(--mono);
+}
+
+#load-status::before {
+  content: "";
+  width: 25px;
+  height: 25px;
+  margin: auto;
+  border: 1px solid #d4a35922;
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 1.1s linear infinite;
+}
+
+#load-status.failed {
+  padding: 18%;
+  font-family: var(--sans);
+  font-size: 13px;
+}
+
+#load-status.failed::before {
+  animation: none;
+  content: "◇";
+  font: 42px var(--serif);
+  border: 0;
+  width: auto;
+  height: auto;
+  color: var(--gold);
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+#tray-footer {
+  position: absolute;
+  bottom: 0;
+  left: 40px;
+  right: 40px;
+  height: 100px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  z-index: 5;
+}
+
+.progress-block { min-width: 167px; }
+
+.progress-label {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin-bottom: 9px;
+}
+
+.progress-label strong {
+  font: 19px var(--serif);
+  color: var(--gold);
+}
+
+.progress-label span { font-size: 14px; color: var(--muted); }
+
+.progress-track {
+  width: 148px;
+  height: 2px;
+  background: #ffffff0d;
+}
+
+.progress-track span {
+  display: block;
+  height: 100%;
+  background: var(--gold);
+  width: 0;
+  transition: width .6s;
+}
+
+.cookie-index { display: flex; gap: 7px; }
+
+.cookie-index button {
+  position: relative;
+  width: 44px;
+  min-height: 44px;
+  border: 1px solid #ffffff28;
+  border-radius: 50%;
+  font: 14px var(--mono);
+  font-weight: 700;
+  color: var(--muted);
+  transition: all .2s;
+}
+
+.cookie-index button:hover,
+.cookie-index button[aria-current="true"] {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: #d4a3590b;
+  transform: translateY(-3px);
+}
+
+.cookie-index button[data-seen="true"]::after {
+  content: "";
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--gold);
+  position: absolute;
+  bottom: 5px;
+  left: calc(50% - 1.5px);
+}
+
+#reset { white-space: nowrap; }
+
+#tooltip {
+  position: fixed;
+  z-index: 60;
+  pointer-events: none;
+  padding: 10px 16px;
+  border: 1px solid rgba(212, 163, 89, 0.45);
+  border-radius: 8px;
+  background: rgba(22, 25, 32, 0.96);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  font-size: 13px;
+  font-weight: 600;
+  max-width: 320px;
+  color: #fff;
+}
+
+body[data-open="true"] #hero {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+body[data-open="true"]:not([data-cinema="true"]) #scene { left: 0; right: min(550px, 94vw); }
+body[data-open="true"] #scene-caption { opacity: 0; }
+
+#fortune-panel {
+  position: fixed;
+  z-index: 20;
+  top: 86px;
+  right: 32px;
+  bottom: 92px;
+  width: min(540px, 94vw);
+  max-height: calc(100vh - 180px);
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(155deg, rgba(28, 31, 38, 0.98), rgba(16, 18, 24, 0.98));
+  border: 1px solid rgba(212, 163, 89, 0.35);
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  transform: translateX(calc(100% + 60px));
+  opacity: 0;
+  transition:
+    transform .6s cubic-bezier(.2, .7, .2, 1),
+    opacity .4s;
+  overflow: hidden;
+}
+
+body[data-open="true"] #fortune-panel {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+#fortune-panel[inert] { visibility: hidden; }
+
+.panel-head { padding: 23px 25px 20px; flex-shrink: 0; }
+
+.panel-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-topline .icon-button { margin: -8px -10px -6px 0; }
+
+.panel-head h2 {
+  font: 32px/1.08 var(--serif);
+  letter-spacing: -.026em;
+  margin-top: 18px;
+  max-width: 285px;
+}
+
+.tabs {
+  display: flex !important;
+  gap: 0;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.32);
+}
+
+.tabs button {
+  position: relative;
+  flex: 1;
+  min-height: 48px;
+  font-size: 13.5px !important;
+  font-weight: 600;
+  padding: 0 8px;
+  color: #b0aba2 !important;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tabs button:hover {
+  color: #ffffff !important;
+}
+
+.tabs button[aria-selected="true"] {
+  color: var(--gold) !important;
+  font-weight: 700;
+}
+
+.tabs button[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  height: 3px;
+  left: 6px;
+  right: 6px;
+  background: var(--gold);
+  border-radius: 3px 3px 0 0;
+  box-shadow: 0 0 12px rgba(212, 163, 89, 0.6);
+}
+
+.panel-mantra-bar {
+  background: rgba(212, 163, 89, 0.08);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-bottom: 6px;
+}
+
+.panel-mantra-quote {
+  font: italic 17px/1.55 var(--serif);
+  color: #f7ede0;
+}
+
+.panel-tab-cta {
+  margin-top: 22px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tab-cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(212, 163, 89, 0.12);
+  border: 1px solid rgba(212, 163, 89, 0.35);
+  color: var(--gold);
+  font: 13.5px var(--sans);
+  font-weight: 600;
+  padding: 9px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tab-cta-button:hover {
+  background: var(--gold);
+  color: #111;
+}
+
+.tabs button {
+  position: relative;
+  flex: 1;
+  min-height: 42px;
+  font-size: 10px;
+  padding: 0 4px;
+  color: var(--muted);
+}
+
+.tabs button[aria-selected="true"] { color: var(--gold); }
+
+.tabs button[aria-selected="true"]::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  height: 2px;
+  left: 7px;
+  right: 7px;
+  background: var(--gold);
+}
+
+#tab-content {
+  padding: 24px 28px 36px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  flex: 1;
+  min-height: 100px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 163, 89, 0.3) transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+#tab-content h3 {
+  font: 10px var(--mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 17px;
+}
+
+#tab-content p {
+  font-size: 13px;
+  line-height: 1.85;
+  color: #c2bdb4;
+}
+
+.paper-card {
+  position: relative;
+  color: #1a1612;
+  background: var(--paper);
+  padding: 28px 26px 30px;
+  border-radius: 4px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  transform: rotate(-0.5deg);
+  border-left: 4px solid var(--gold);
+}
+
+.paper-card::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(95, 70, 35, 0.15);
+  pointer-events: none;
+}
+
+.paper-card .mono {
+  font-size: 11px;
+  font-weight: 700;
+  color: #7b6549;
+  margin-bottom: 16px;
+  letter-spacing: .18em;
+}
+
+.paper-card blockquote {
+  margin: 0;
+  font: 26px/1.36 var(--serif);
+  font-weight: 600;
+  letter-spacing: -.015em;
+  color: #1a1612;
+}
+
+.paper-seal {
+  border-top: 1px solid rgba(95, 70, 35, 0.2);
+  margin-top: 18px;
+  padding-top: 12px;
+  font: 11px var(--mono);
+  font-weight: 700;
+  letter-spacing: .14em;
+  color: #7b6549;
+}
+
+.panel-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-title {
+  font: 12px/1.4 var(--mono);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-text {
+  font-size: 15.5px;
+  line-height: 1.68;
+  color: #ded9d0;
+}
+
+.evidence-section {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+.evidence-section .section-text {
+  font-size: 15px;
+  color: #d2cdc4;
+}
+
+.citation {
+  font: 12.5px/1.6 var(--mono);
+  color: var(--gold);
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(212, 163, 89, 0.3);
+  font-weight: 600;
+}
+
+.source-note {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 12px;
+  margin-top: 12px;
+  color: #b5b0a6;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.source-note b { font-weight: 600; color: #f0e6d6; }
+
+.research-links-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.research-link-badge {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  background: rgba(212, 163, 89, 0.12);
+  border: 1px solid rgba(212, 163, 89, 0.35);
+  color: #f7f3eb !important;
+  font-size: 13px !important;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+  line-height: 1.4;
+  margin: 0 !important;
+}
+
+.research-link-badge:hover {
+  background: var(--gold) !important;
+  color: #111111 !important;
+  border-color: var(--gold) !important;
+  transform: translateX(4px);
+}
+.source-note a { display: inline-block; margin-top: 6px; margin-right: 12px; color: var(--gold); font-size: 12.5px; text-decoration: underline; }
+
+.habit-section {
+  background: rgba(212, 163, 89, 0.1);
+  border: 1px solid rgba(212, 163, 89, 0.3);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+
+.habit-text {
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.citation {
+  font: 10px/1.75 var(--mono);
+  color: var(--gold);
+  margin-top: 18px;
+}
+
+.source-note {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+.source-note b { font-weight: 500; color: #d2c2a9; }
+
+.source-note a {
+  display: block;
+  margin-top: 10px;
+  color: var(--gold);
+  font-size: 10px;
+}
+
+.habit-number {
+  font: 60px/.9 var(--serif);
+  color: #d4a35940;
+  display: block;
+  margin-bottom: 24px;
+}
+
+.panel-bottom {
+  padding: 13px 23px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.panel-bottom .text-button { font-size: 14px; font-weight: 600; }
+.next { color: var(--gold); }
+
+#essayView {
+  max-width: 1150px;
+  margin: 76px auto 100px;
+  padding: 0 36px;
+}
+
+#essayView .essay-header {
+  padding: 0 0 52px 215px;
+  border-bottom: 1px solid var(--line);
+}
+
+.essay-header h1 {
+  font: 64px/1.08 var(--serif);
+  letter-spacing: -.045em;
+  margin: 21px 0;
+}
+
+.essay-header p {
+  color: #ded8ce;
+  max-width: 680px;
+  font-size: 18px; line-height: 1.75;
+}
+
+.essay-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 50px;
+}
+
+.essay-toc {
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  padding-top: 40px;
+  display: grid;
+  gap: 13px;
+}
+
+.essay-toc a {
+  font-size: 14.5px;
+  color: var(--muted);
+  text-decoration: none;
+  line-height: 1.6;
+}
+
+.essay-toc a:hover { color: var(--gold); }
+
+.essay-toc span {
+  font: 13px var(--mono);
+  color: var(--gold);
+  margin-right: 8px;
+}
+
+.essay-entry {
+  padding: 50px 0;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 30px;
+}
+
+.essay-entry h2 {
+  font: 35px var(--serif);
+  margin: 13px 0 22px;
+  letter-spacing: -.02em;
+}
+
+.essay-entry blockquote {
+  font: 25px/1.5 var(--serif);
+  margin: 0 0 25px;
+  color: #e5ceb0;
+  max-width: 710px;
+}
+
+.essay-entry > p {
+  color: #ede7de;
+  line-height: 1.85;
+  font-size: 18px;
+  max-width: 700px;
+}
+
+.essay-evidence {
+  border-left: 1px solid #d4a35955;
+  padding-left: 22px;
+  margin-top: 28px;
+}
+
+.essay-evidence p { color: #e5e0d7; font-size: 17px; line-height: 1.7; }
+
+.essay-habit {
+  padding: 20px 24px;
+  margin-top: 28px;
+  background: #d4a35908;
+  border: 1px solid #d4a35918;
+  border-radius: 4px;
+}
+
+.essay-habit h3 {
+  font: 13px var(--mono);
+  color: var(--gold);
+  letter-spacing: .1em;
+  margin-bottom: 10px;
+}
+
+.essay-habit p { font-size: 13px; color: #d8ccbb; }
+
+#printView {
+  max-width: 1100px;
+  margin: 46px auto 80px;
+  padding: 0 25px;
+}
+
+.print-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.print-toolbar p { font-size: 12px; color: var(--muted); }
+
+#print-sheet {
+  background: #faf8f2;
+  color: #252321;
+  max-width: 820px;
+  margin: auto;
+  padding: 35px 40px;
+  box-shadow: 0 25px 80px #0004;
+}
+
+.print-heading {
+  border-bottom: 1px solid #2e281f;
+  padding-bottom: 19px;
+  margin-bottom: 20px;
+}
+
+.print-heading h1 {
+  font: 34px var(--serif);
+  letter-spacing: -.03em;
+}
+
+.print-heading p {
+  font: 10px var(--sans);
+  margin-top: 8px;
+  color: #655c50;
+}
+
+.print-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 26px;
+}
+
+.print-card { break-inside: avoid; }
+
+.print-card h2 {
+  font: 17px var(--serif);
+  margin-bottom: 8px;
+}
+
+.print-card h2 span {
+  font: 10px var(--mono);
+  color: #83602f;
+  margin-right: 5px;
+}
+
+.print-card p { font: 11px/1.6 var(--sans); }
+
+.print-card .print-habit {
+  margin-top: 7px;
+  font-size: 10px;
+  color: #67543b;
+}
+
+.print-card .print-citation {
+  font: 8px/1.5 var(--mono);
+  color: #756b5d;
+  margin-top: 7px;
+}
+
+.print-foot {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid #b9b0a1;
+  font: 9px/1.5 var(--sans);
+  color: #756b5d;
+}
+
+dialog {
+  border: 1px solid #ffffff25;
+  border-radius: 12px;
+  background: #191c22;
+  color: var(--ink);
+  padding: 30px;
+  width: min(480px, calc(100% - 32px));
+  max-height: 85svh;
+  box-shadow: 0 30px 100px #0008;
+  overflow: auto;
+}
+
+dialog::backdrop {
+  background: #0009;
+  backdrop-filter: blur(5px);
+}
+
+dialog h2 { font: 32px var(--serif); margin: 5px 0 18px; }
+
+dialog h3 {
+  font: 11px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--gold);
+  margin: 24px 0 12px;
+}
+
+dialog p {
+  font-size: 12px;
+  line-height: 1.85;
+  color: #bcb7ae;
+}
+
+dialog .dialog-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+  margin-top: 27px;
+}
+
+.shortcut-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 11px 20px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+kbd {
+  font: 10px var(--mono);
+  border: 1px solid #ffffff28;
+  border-radius: 3px;
+  padding: 3px 6px;
+  color: var(--paper);
+  width: fit-content;
+}
+
+#copy-value {
+  display: block;
+  width: 100%;
+  height: 160px;
+  margin-top: 15px;
+  background: #0c0e12;
+  color: var(--paper);
+  border: 1px solid var(--line);
+  padding: 14px;
+  resize: vertical;
+  font: 13px/1.6 var(--sans);
+}
+
+#toast {
+  position: fixed;
+  left: 50%;
+  bottom: 118px;
+  z-index: 100;
+  transform: translate(-50%, 12px);
+  padding: 12px 20px;
+  max-width: 90vw;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  background: #25272af2;
+  color: var(--paper);
+  border: 1px solid #d4a35944;
+  border-radius: 6px;
+  font-size: 12px;
+  transition: opacity .2s, transform .2s;
+  box-shadow: 0 10px 40px #0004;
+}
+
+#toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+#exit-cinema {
+  display: none;
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 90;
+  border-radius: 50%;
+  background: #15181dc9;
+  border: 1px solid var(--line);
+}
+
+body[data-cinema="true"] #topbar,
+body[data-cinema="true"] #hero,
+body[data-cinema="true"] #tray-footer,
+body[data-cinema="true"] #fortune-panel,
+body[data-cinema="true"] #scene-caption {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+body[data-cinema="true"] #trayView {
+  position: fixed;
+  inset: 0;
+  height: 100svh;
+}
+
+body[data-cinema="true"] #scene,
+body[data-cinema="true"][data-open="true"] #scene,
+body[data-cinema="true"] #trayView #scene {
+  position: fixed !important;
+  inset: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+}
+
+body[data-cinema="true"] #exit-cinema { display: grid; }
+
+@media (min-width: 1600px) {
+  #hero { left: 8%; top: 22%; }
+  #fortune-panel { right: 5%; width: 410px; }
+  body[data-open="true"]:not([data-cinema="true"]) #scene { right: 500px; }
+}
+
+@media (max-width: 1100px) {
+  #topbar { margin: 0 25px; gap: 13px; }
+  .brand-name { font-size: 16px; }
+  .brand-name small { font-size: 8px; }
+  .mode-nav button { padding: 0 12px; }
+  #hero { left: 5%; width: 35%; }
+  #hero h1 { font-size: 49px; }
+  #tray-footer { left: 25px; right: 25px; }
+  .cookie-index { gap: 5px; }
+  .cookie-index button { width: 34px; min-height: 38px; }
+  .progress-block { min-width: 133px; }
+  .progress-track { width: 120px; }
+  #fortune-panel { right: 24px; width: 355px; }
+  body[data-open="true"]:not([data-cinema="true"]) #scene { right: 370px; }
+}
+
+@media (max-width: 820px) {
+  #topbar {
+    height: 120px;
+    flex-wrap: wrap;
+    padding: 17px 0 9px;
+    align-content: space-between;
+    gap: 10px;
+  }
+
+  .brand { flex: 1; }
+  .brand-name { font-size: 17px; }
+  .brand-mark { width: 29px; height: 29px; }
+  .brand-name small { font-size: 7px; }
+
+  .mode-nav {
+    order: 3;
+    margin: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    gap: 5px;
+  }
+
+  .mode-nav button {
+    min-height: 30px;
+    padding: 0 18px;
+    font-size: 10px;
+  }
+
+  .tools { gap: 1px; }
+  .divider { margin: 0 3px; }
+  .icon-button { width: 36px; min-height: 36px; }
+  .tools .desktop-tool { display: none; }
+
+  #trayView {
+    height: calc(100svh - 120px);
+    min-height: 560px;
+  }
+
+  #hero {
+    left: 6%;
+    top: 28px;
+    width: 88%;
+    max-width: none;
+    text-align: center;
+  }
+
+  #hero .eyebrow { justify-content: center; font-size: 8px; }
+  #hero h1 { font-size: 43px; margin: 12px 0; }
+  #hero h1 em { display: block; }
+
+  #hero .intro {
+    font-size: 12px;
+    max-width: 390px;
+    margin: auto;
+    line-height: 1.65;
+  }
+
+  #hero .primary {
+    margin-top: 16px;
+    padding: 7px 16px;
+    min-height: 37px;
+    font-size: 11px;
+  }
+
+  .under-note { display: none; }
+
+  #scene {
+    left: 0;
+    right: 0;
+    top: 165px;
+    bottom: 101px;
+  }
+
+  #scene::after {
+    background: linear-gradient(
+      0deg,
+      var(--bg),
+      transparent 10%,
+      transparent 90%,
+      var(--bg)
+    );
+  }
+
+  #scene-caption {
+    left: 50%;
+    bottom: 111px;
+    font-size: 8px;
+  }
+
+  #tray-footer {
+    height: 92px;
+    left: 22px;
+    right: 22px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 4px 10px;
+    padding: 9px 0;
+  }
+
+  .progress-block { display: contents; }
+  .progress-label { margin: 0; gap: 7px; }
+  .progress-label strong { font-size: 14px; }
+  .progress-label span { font-size: 9px; }
+  .progress-track { display: none; }
+
+  .cookie-index {
+    grid-row: 2;
+    grid-column: 1 / 3;
+    justify-content: space-between;
+    gap: 3px;
+  }
+
+  .cookie-index button {
+    width: 30px;
+    min-height: 30px;
+    font-size: 9px;
+  }
+
+  #reset {
+    grid-row: 1;
+    grid-column: 2;
+    padding: 0;
+    min-height: 24px;
+    font-size: 9px;
+  }
+
+  #reset svg { width: 13px; }
+
+  body[data-open="true"] #scene {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: calc(48svh + 14px);
+  }
+
+  #fortune-panel {
+    left: 16px;
+    right: 16px;
+    top: auto;
+    bottom: 14px;
+    width: auto;
+    max-height: 48svh;
+    min-height: 260px;
+    border-radius: 12px;
+    transform: translateY(calc(100% + 40px));
+  }
+
+  body[data-open="true"] #fortune-panel { transform: translateY(0); }
+  body[data-open="true"] #tray-footer { visibility: hidden; }
+
+  #fortune-panel .panel-head {
+    padding: 14px 20px 12px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel-head h2 {
+    font-size: 24px;
+    margin-top: 6px;
+    max-width: 90%;
+  }
+
+  .panel-head .eyebrow { font-size: 8px; }
+  .tabs { padding: 0 12px; }
+  .tabs button { min-height: 34px; }
+  #tab-content { padding: 15px 20px; min-height: 80px; }
+  .paper-card { padding: 20px; }
+  .paper-card blockquote { font-size: 21px; }
+  .paper-card .mono { margin-bottom: 13px; }
+  .paper-seal { display: none; }
+  .panel-bottom { padding: 6px 20px; }
+  .panel-bottom button { min-height: 35px; }
+  .habit-number { display: none; }
+
+  #essayView { margin: 38px auto 70px; padding: 0 23px; }
+  #essayView .essay-header { padding: 0 0 30px; }
+  .essay-header h1 { font-size: 46px; }
+  .essay-layout { display: block; }
+  .essay-toc { display: none; }
+  .essay-entry { padding: 32px 0; }
+  .essay-entry h2 { font-size: 29px; }
+  .essay-entry blockquote { font-size: 22px; }
+
+  #printView { margin: 26px 0; padding: 0 15px; }
+  #print-sheet { padding: 25px 20px; }
+  .print-grid { gap: 20px 16px; }
+  .print-card h2 { font-size: 15px; }
+  .print-toolbar { align-items: flex-start; }
+  .print-toolbar p { font-size: 10px; max-width: 170px; }
+  .print-toolbar button { font-size: 11px; padding: 9px 13px; }
+
+  #toast { bottom: 105px; }
+  body[data-open="true"] #toast { bottom: 51svh; }
+}
+
+@media (max-width: 480px) {
+  #topbar { margin: 0 18px; }
+  .brand { gap: 8px; }
+  .brand-name small { display: none; }
+  .brand-name { font-size: 15px; }
+  #hero h1 { font-size: 36px; }
+  #hero .intro { max-width: 305px; font-size: 11px; }
+  #scene { top: 165px; }
+  #trayView { min-height: 520px; }
+  .mode-nav button { padding: 0 12px; }
+  .cookie-index button { width: 28px; min-height: 29px; }
+  #hero .eyebrow { letter-spacing: .1em; }
+  .tools #help { width: 28px; }
+  .paper-card blockquote { font-size: 20px; }
+  .print-grid { grid-template-columns: 1fr; }
+  .print-heading h1 { font-size: 28px; }
+}
+
+@media (max-height: 680px) and (min-width: 821px) {
+  #topbar { height: 74px; }
+  #trayView { height: calc(100svh - 74px); min-height: 370px; }
+  #hero { top: 13%; }
+  #hero h1 { font-size: 44px; margin: 17px 0; }
+  #hero .primary { margin-top: 20px; }
+  #fortune-panel { top: 89px; bottom: 108px; }
+  .panel-head { padding: 16px 21px; }
+  .panel-head h2 { font-size: 26px; margin-top: 10px; }
+  #tab-content { padding: 17px 21px; }
+  .paper-card blockquote { font-size: 20px; }
+  #tray-footer { height: 84px; }
+  #scene { bottom: 84px; }
+  #scene-caption { bottom: 92px; }
+}
+
+@media (max-height: 650px) and (max-width: 820px) {
+  #trayView { min-height: 0; }
+  #hero { top: 15px; }
+  #hero h1 { font-size: 32px; margin: 7px 0; }
+  #hero .intro { display: none; }
+  #hero .primary { margin-top: 10px; min-height: 34px; }
+  #scene { top: 105px; }
+  #scene-caption { bottom: 99px; }
+}
+
+@media (max-height: 600px) and (min-width: 821px) {
+  #topbar { height: 64px; margin: 0 24px; }
+  #trayView { height: calc(100svh - 64px); min-height: 0; }
+  #hero { top: 8%; width: 34%; }
+  #hero .eyebrow { font-size: 8px; }
+  #hero h1 { font-size: 36px; margin: 14px 0; }
+  #hero .intro, .under-note { display: none; }
+  #hero .primary { margin-top: 14px; padding: 8px 16px; }
+  #scene { top: 0; bottom: 72px; }
+  #tray-footer { height: 72px; }
+  #scene-caption { bottom: 81px; }
+  #fortune-panel { top: 76px; bottom: 84px; }
+  .panel-head { padding: 12px 20px; }
+  .panel-head h2 { font-size: 23px; margin-top: 8px; }
+  .tabs button { min-height: 34px; }
+  #tab-content { padding: 14px 20px; }
+  .panel-bottom { padding: 5px 20px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@page { size: A4; margin: 11mm; }
+
+@media print {
+  html, body {
+    background: white !important;
+    color: #111 !important;
+    overflow: visible !important;
+    height: auto !important;
+    font-size: 9pt;
+  }
+
+  body > *:not(main),
+  main > *:not(#printView) {
+    display: none !important;
+  }
+
+  main, #printView, #print-sheet {
+    display: block !important;
+    position: static !important;
+    visibility: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    box-shadow: none !important;
+    background: white !important;
+    color: #111 !important;
+  }
+
+  .print-toolbar { display: none !important; }
+  .print-heading { padding-bottom: 4mm; margin-bottom: 4mm; }
+  .print-heading h1 { font-size: 23pt; }
+  .print-heading p { font-size: 8pt; color: #333; }
+
+  .print-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm 7mm;
+  }
+
+  .print-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .print-card h2 {
+    font-size: 11pt;
+    line-height: 1.15;
+    margin-bottom: 2mm;
+  }
+
+  .print-card h2 span { font-size: 8pt; color: #333; }
+  .print-card p { font-size: 8pt; line-height: 1.35; }
+
+  .print-card .print-habit {
+    font-size: 7.7pt;
+    line-height: 1.35;
+    color: #222;
+    margin-top: 1.7mm;
+  }
+
+  .print-card .print-citation {
+    font-size: 6pt;
+    line-height: 1.3;
+    color: #444;
+    margin-top: 1.6mm;
+  }
+
+  .print-foot {
+    font-size: 6.5pt;
+    line-height: 1.4;
+    margin-top: 4mm;
+    padding-top: 2mm;
+    color: #333;
+  }
+}
+</style>
+</head>
+
+<body data-mode="tray" data-open="false" data-cinema="false">
+<a href="#fortune-index" class="skip" data-i18n="skip">Skip to the fortunes</a>
+
+<header id="topbar">
+  <a class="brand" href="#" id="brand-home" aria-label="The Fortune of Reason">
+    <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="16.5" fill="none" stroke="currentColor" stroke-width="1.3" opacity="0.45"/>
+      <path d="M20 5 L22.8 17.2 L35 20 L22.8 22.8 L20 35 L17.2 22.8 L5 20 L17.2 17.2 Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <circle cx="20" cy="20" r="2.2" fill="currentColor"/>
+    </svg>
+    <span class="brand-name">
+      The Fortune of Reason
+      <small data-i18n="brandSub">An independent mind, by design</small>
+    </span>
+  </a>
+
+  <nav class="mode-nav" aria-label="Views" data-aria="views">
+    <button type="button" data-mode="tray" aria-pressed="true" data-i18n="tray">Fortune tray</button>
+    <button type="button" data-mode="essay" aria-pressed="false" data-i18n="essay">Full text</button>
+    <button type="button" data-mode="print" aria-pressed="false" data-i18n="print">A4 cheatsheet</button>
+  </nav>
+
+  <div class="tools">
+    <button type="button" class="icon-button" id="sound"
+      aria-pressed="false" data-aria="sound" data-title="sound">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m11 5-6 4H2v6h3l6 4V5Z"/>
+        <path id="sound-waves" d="m16 9 5 6m0-6-5 6"/>
+      </svg>
+    </button>
+
+    <button type="button" class="icon-button desktop-tool" id="cinema"
+      data-aria="cinema" data-title="cinema">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/>
+      </svg>
+    </button>
+
+    <span class="divider" aria-hidden="true"></span>
+
+    <button type="button" id="language" data-aria="language" data-title="language">
+      <span class="lang-opt active">EN</span><span class="lang-sep">/</span><span class="lang-opt">PL</span>
+    </button>
+
+    <button type="button" class="icon-button" id="help"
+      data-aria="help" data-title="help">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M9.8 9a2.4 2.4 0 0 1 4.7.6c0 1.5-2.5 1.7-2.5 3.4M12 16h.01"/>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<main id="main">
+  <section id="trayView" aria-label="Interactive fortune tray" data-aria="sceneLabel">
+    <div id="scene">
+      <div id="canvasMount" role="img"
+        aria-label="Ten golden fortune cookies on a dark ceramic tray"
+        data-aria="canvasLabel"></div>
+      <div id="load-status" role="status" data-i18n="loading">Setting the table…</div>
+    </div>
+
+    <div id="hero">
+      <div class="eyebrow" data-i18n="edition">Ten rituals for the age of AI</div>
+      <h1>
+        <span data-i18n="hero1">Keep your mind.</span>
+        <em data-i18n="hero2">Open a fortune.</em>
+      </h1>
+      <p class="intro" data-i18n="intro">
+        A little wisdom. A little friction. Ten reminders to use artificial intelligence without losing your own.
+      </p>
+      <button type="button" class="primary" id="random">
+        <span data-i18n="random">Let a fortune find me</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 12h15m-5-5 5 5-5 5"/>
+        </svg>
+      </button>
+      <p class="under-note" data-i18n="heroNote">Not a prediction. A practice.</p>
+    </div>
+
+    <p id="scene-caption" data-i18n="gesture">
+      Choose a cookie · Drag to explore · Scroll to get closer
+    </p>
+
+    <footer id="tray-footer">
+      <div class="progress-block">
+        <div class="progress-label">
+          <strong id="progress-number">00 / 10</strong>
+          <span id="progress-text">fortunes discovered</span>
+        </div>
+        <div class="progress-track" role="progressbar" id="progressbar"
+          aria-valuemin="0" aria-valuemax="10" aria-valuenow="0" data-aria="progress">
+          <span id="progress-fill"></span>
+        </div>
+      </div>
+
+      <nav id="fortune-index" class="cookie-index"
+        aria-label="Choose a fortune" data-aria="choose"></nav>
+
+      <button type="button" id="reset" class="text-button">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 10a9 9 0 1 1 1 8M3 4v6h6"/>
+        </svg>
+        <span data-i18n="reset">Reset the tray</span>
+      </button>
+    </footer>
+  </section>
+
+  <section id="essayView" hidden>
+    <header class="essay-header">
+      <div class="eyebrow" data-i18n="edition">Ten rituals for the age of AI</div>
+      <h1 data-i18n="essayTitle">A mind of your own.</h1>
+      <p data-i18n="essayIntro">
+        Read slowly. Disagree thoughtfully. Keep the practices that make your thinking more independent.
+      </p>
+      <div class="source-note" data-i18n="editorialNote"></div>
+    </header>
+    <div class="essay-layout">
+      <nav class="essay-toc" id="essay-toc" data-aria="contents" aria-label="Contents"></nav>
+      <div id="essay-entries"></div>
+    </div>
+  </section>
+
+  <section id="printView" hidden>
+    <div class="print-toolbar">
+      <p data-i18n="printHelp">
+        Ten fortunes. One A4 page. Print at 100% scale, with browser headers and footers off.
+      </p>
+      <button type="button" class="primary" id="print-now">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 9V3h12v6M6 18H3V9h18v9h-3M6 14h12v7H6Z"/>
+        </svg>
+        <span data-i18n="printNow">Print / Save PDF</span>
+      </button>
+    </div>
+    <div id="print-sheet">
+      <div class="print-heading">
+        <h1>The Fortune of Reason</h1>
+        <p data-i18n="printSub">Ten practices for keeping your own mind in the age of AI.</p>
+      </div>
+      <div class="print-grid" id="print-grid"></div>
+      <p class="print-foot" data-i18n="printFoot"></p>
+    </div>
+  </section>
+</main>
+
+<aside id="fortune-panel" aria-labelledby="fortune-title" aria-hidden="true" inert>
+  <header class="panel-head">
+    <div class="panel-topline">
+      <div class="eyebrow">
+        <span data-i18n="fortune">Fortune</span>
+        <span id="fortune-number">01 / 10</span>
+      </div>
+      <button type="button" id="close-panel" class="icon-button"
+        data-aria="close" data-title="close">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="m6 6 12 12M6 18 18 6"/>
+        </svg>
+      </button>
+    </div>
+    <h2 id="fortune-title"></h2>
+  </header>
+
+  <div class="tabs" role="tablist" data-aria="fortuneSections" aria-label="Fortune sections">
+    <button type="button" role="tab" id="tab-reflection"
+      aria-controls="tab-content" aria-selected="true" tabindex="0"
+      data-tab="reflection" data-i18n="tabReflection">Why it matters</button>
+    <button type="button" role="tab" id="tab-finding"
+      aria-controls="tab-content" aria-selected="false" tabindex="-1"
+      data-tab="finding" data-i18n="tabFinding">The research</button>
+    <button type="button" role="tab" id="tab-habit"
+      aria-controls="tab-content" aria-selected="false" tabindex="-1"
+      data-tab="habit" data-i18n="tabHabit">Your practice</button>
+  </div>
+
+  <div id="tab-content" role="tabpanel" tabindex="0" aria-labelledby="tab-mantra"></div>
+
+  <footer class="panel-bottom">
+    <button type="button" id="copy" class="text-button">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="8" y="8" width="12" height="13" rx="2"/>
+        <path d="M15 8V3H3v13h5"/>
+      </svg>
+      <span data-i18n="copy">Copy for X / LinkedIn</span>
+    </button>
+    <button type="button" id="next" class="text-button next">
+      <span data-i18n="next">Next fortune</span>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 12h15m-5-5 5 5-5 5"/>
+      </svg>
+    </button>
+  </footer>
+</aside>
+
+<dialog id="reset-dialog" aria-labelledby="reset-title">
+  <div class="eyebrow" data-i18n="freshStart">A fresh beginning</div>
+  <h2 id="reset-title" data-i18n="resetQuestion">Set the table again?</h2>
+  <p data-i18n="resetInfo">
+    This clears your discovery progress on this device. The ten fortunes will still be here.
+  </p>
+  <div class="dialog-actions">
+    <button type="button" class="text-button" data-close="reset-dialog"
+      data-i18n="cancel">Keep exploring</button>
+    <button type="button" class="primary" id="confirm-reset"
+      data-i18n="reset">Reset the tray</button>
+  </div>
+</dialog>
+
+<dialog id="help-dialog" aria-labelledby="help-title">
+  <div class="dialog-top">
+    <div class="eyebrow" data-i18n="smallRitual">A small ritual</div>
+    <button type="button" class="icon-button" data-close="help-dialog" data-aria="close">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="m6 6 12 12M6 18 18 6"/>
+      </svg>
+    </button>
+  </div>
+  <h2 id="help-title" data-i18n="helpTitle">Make room for thought.</h2>
+  <p data-i18n="helpIntro"></p>
+
+  <h3 data-i18n="keyboard">Keyboard</h3>
+  <div class="shortcut-grid">
+    <kbd>1–9 · 0</kbd><span data-i18n="keysNumbers"></span>
+    <kbd>← →</kbd><span data-i18n="keysArrows"></span>
+    <kbd>Esc</kbd><span data-i18n="keysEscape"></span>
+    <kbd>L · S · H</kbd><span data-i18n="keysTools"></span>
+    <kbd>R · ?</kbd><span data-i18n="keysMore"></span>
+  </div>
+
+  <h3 data-i18n="sourceTitle">About the text</h3>
+  <p data-i18n="editorialNote"></p>
+
+  <h3 data-i18n="localTitle">A local experience</h3>
+  <p id="local-info"></p>
+  <button type="button" id="save-offline" class="text-button gold"
+    data-i18n="saveOffline">Save offline edition ↓</button>
+  <div class="source-note" id="storage-note"></div>
+</dialog>
+
+<dialog id="copy-dialog" aria-labelledby="copy-title">
+  <h2 id="copy-title" data-i18n="copyManual">Copy your fortune</h2>
+  <p data-i18n="copyManualHint">
+    Select the text below and copy it with your device’s usual command.
+  </p>
+  <textarea id="copy-value" readonly></textarea>
+  <div class="dialog-actions">
+    <button type="button" class="primary" data-close="copy-dialog"
+      data-i18n="close">Close</button>
+  </div>
+</dialog>
+
+<button type="button" id="exit-cinema" class="icon-button"
+  data-aria="showUI" data-title="showUI">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M3 8h5V3m13 5h-5V3M8 21v-5H3m13 5v-5h5"/>
+  </svg>
+</button>
+
+<div id="tooltip" hidden></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<noscript>
+  <p style="position:fixed;inset:25%;z-index:100;background:#191c22;padding:40px">
+    JavaScript is required for this interactive experience. /
+    Ta interaktywna aplikacja wymaga JavaScript.
+  </p>
+</noscript>
+
+<script id="app-source">
+'use strict';
+
+const DEKALOG_DATA = [
+  {
+    id: 1,
+    titlePl: "Wynik to nie rozwój",
+    titleEn: "Output vs. Skill",
+    mantraPl: "AI może poprawić twoją pracę szybciej, niż poprawi twoje umiejętności. Nie myl lepszego wyniku z własnym rozwojem.",
+    mantraEn: "AI can improve your work faster than it improves your skills. Do not mistake a better output for your own growth.",
+    reflectionPl: "Kiedy narzędzie wygładza tekst lub naprawia kod, masz poczucie geniuszu. Ale to nie ty stałeś się mądrzejszy — to dokument stał się lepszy. Jeśli narzędzie wykonuje pracę za ciebie, odbiera ci jedyny trening, który rozwijał twój umysł.",
+    reflectionEn: "When the tool polishes your text or fixes your code, it feels like genius. But you didn't become smarter—the file became better. By doing the work for you, it quietly removes the only practice that builds your mind.",
+    citation: "Bastani et al. (PNAS 2025) · Noy & Zhang (Science 2023)",
+    findingPl: "Licealiści z dostępem do GPT-4 rozwiązywali zadania o 48% lepiej w trakcie nauki, lecz na późniejszym egzaminie bez AI wypadli o 17% gorzej od rówieśników.",
+    findingEn: "High schoolers with GPT-4 scored 48% higher during practice, but scored 17% lower on a subsequent unaided exam compared to peers who studied without AI.",
+    habitPl: "Po skończonym zadaniu zapytaj siebie: gdyby AI zniknęło, czy potrafiłbym powtórzyć to jutro z pamięci?",
+    habitEn: "After an assisted task, ask yourself: if the tool vanished tomorrow, could I recreate this logic from memory?"
+  },
+  {
+    id: 2,
+    titlePl: "Pusta kartka najpierw",
+    titleEn: "Blank Page First",
+    mantraPl: "Zanim zapytasz AI, sformułuj własne zdanie. Kto pozwala maszynie zacząć, spędzi resztę dnia na reagowaniu na jej pomysły zamiast własnych.",
+    mantraEn: "Form your own view before you ask AI. If you let the machine think first, you will spend the rest of the day reacting to its frame.",
+    reflectionPl: "Z chwilą, gdy model wypluje pierwsze propozycje, twój mózg wchodzi w tryb reaktywny. Przestajesz tworzyć — stajesz się jedynie korektorem statystycznych schematów.",
+    reflectionEn: "The moment the model outputs its initial draft, your brain switches to reactive mode. You stop creating and become merely an editor of statistical averages.",
+    citation: "Zhi, Kumar & Lee (2026) · Doshi & Hauser (Science Advances 2024)",
+    findingPl: "Samodzielna próba przed włączeniem AI prowadzi do głębszej argumentacji; wczesne podpowiedzi AI drastycznie zawężają unikalność pomysłów.",
+    findingEn: "Drafting independently before prompting leads to deeper reasoning; early AI ideation anchors participants into narrow semantic clusters.",
+    habitPl: "Zapisz odręcznie w 3 punktach swój punkt widzenia, zanim w ogóle otworzysz okno promptu.",
+    habitEn: "Write down your thesis in 3 handwritten bullet points before opening any prompt window."
+  },
+  {
+    id: 3,
+    titlePl: "Opór to trening",
+    titleEn: "Friction is Training",
+    mantraPl: "Wysiłek przy myśleniu to nie usterka procesu – to moment, w którym mózg tworzy pamięć. Kiedy usuwasz cały opór, usuwasz naukę.",
+    mantraEn: "Mental effort is not wasted time; it is the moment memory is made. When you eliminate all friction, you eliminate learning.",
+    reflectionPl: "Przez dekady optymalizowaliśmy tarcie w pracy. Jednak w myśleniu trud to nie przeszkoda na drodze do celu; ten trud to sam cel.",
+    reflectionEn: "We spent decades removing friction from work. But in cognitive craft, friction is not an obstacle; it is the actual workout.",
+    citation: "Kosmyna et al. (MIT 2025) · Roediger & Karpicke (2006)",
+    findingPl: "Zapisy EEG podczas pisania z AI ujawniły spadek łączności neuronalnej (dług poznawczy) i słabszą retencję treści w porównaniu z wysiłkowym odzyskiwaniem z pamięci.",
+    findingEn: "EEG readings during AI-assisted writing revealed decreased neural connectivity ('cognitive debt') and weaker recall compared to effortful retrieval practice.",
+    habitPl: "Gdy zadanie dotyczy kluczowej umiejętności, celowo wykonaj najtrudniejszy krok bez żadnej podpowiedzi.",
+    habitEn: "When a task builds a core skill, intentionally forbid assistance on the most difficult reasoning step."
+  },
+  {
+    id: 4,
+    titlePl: "Iluzja wygody i tempa",
+    titleEn: "The Illusion of Speed",
+    mantraPl: "Nie myl wygody z szybkością. Weryfikowanie gładko napisanych błędów często zajmuje więcej czasu niż zrobienie czegoś samemu od początku.",
+    mantraEn: "Do not mistake convenience for speed. Fact-checking a fluent, plausible mistake often takes longer than doing the work yourself from scratch.",
+    reflectionPl: "AI pisze z niesamowitą pewnością siebie. Ta płynność usypia czujność i fałszuje subiektywne poczucie zaoszczędzonego czasu.",
+    reflectionEn: "AI outputs prose and code with complete confidence. That fluency lulls you to sleep and creates a false feeling of speed.",
+    citation: "Becker et al. (2025) · Buçinca et al. (ACM HCI 2021)",
+    findingPl: "Doświadczeni programiści pracowali z AI o 19% dłużej przy realnych zadaniach, mimo że w ankietach deklarowali, iż narzędzie przyspieszyło ich pracę.",
+    findingEn: "Experienced developers took 19% longer on real tasks with AI, despite reporting strong subjective perceptions that it saved them time.",
+    habitPl: "Mierz całkowity czas zadania z uwzględnieniem debugowania i audytu, a nie tylko czas pierwszej odpowiedzi modelu.",
+    habitEn: "Clock the whole task end-to-end including auditing, not just the time it took to generate the first draft."
+  },
+  {
+    id: 5,
+    titlePl: "Weryfikacja wymaga wiedzy",
+    titleEn: "Review Requires Expertise",
+    mantraPl: "Nie możesz rzetelnie ocenić czegoś, czego sam nie rozumiesz. Bez własnej wiedzy człowiek w pętli staje się tylko bezmyślną pieczątką.",
+    mantraEn: "You cannot reliably judge what you do not understand. Without your own expertise, human oversight is just a rubber stamp.",
+    reflectionPl: "Obecność człowieka przy zatwierdzaniu bywa czystą fikcją. Jeśli nie znasz fundamentów dziedziny, nie widzisz, kiedy model gładko mija się z prawdą.",
+    reflectionEn: "Having a human in the loop is a farce if that human lacks domain depth. You cannot catch subtle hallucinations without foundational knowledge.",
+    citation: "Klein & Klein (Frontiers in AI 2025) · Narayanan & Feigh (2026)",
+    findingPl: "W badaniach nadzoru nad połączonymi agentami ludzie masowo pomijali błędy w zagregowanych raportach, polegając na powierzchownej poprawności tekstu.",
+    findingEn: "Supervisors overseeing coupled AI agents routinely overlooked operational errors in summarized reports due to high superficial plausibility.",
+    habitPl: "Nigdy nie zatwierdzaj tekstu ani kodu, jeśli nie potrafisz wskazać konkretnego testu lub faktu potwierdzającego jego działanie.",
+    habitEn: "Never approve a line of code or copy unless you can articulate the exact verification test that validates it."
+  },
+  {
+    id: 6,
+    titlePl: "Pułapka przeciętności",
+    titleEn: "The Mediocrity Trap",
+    mantraPl: "Sztuczna inteligencja dąży do średniej. Twoja wartość zaczyna się tam, gdzie kończą się statystyczne schematy.",
+    mantraEn: "AI pulls toward the average. Your value begins where statistical patterns end.",
+    reflectionPl: "Model statystyczny z definicji preferuje rozwiązania najbardziej prawdopodobne. Wygładza styl, spłaszczając indywidualną perspektywę i specyficzny punkt widzenia.",
+    reflectionEn: "A language model by definition gravitates toward the highest probability tokens. It buffs away quirks, flattening individual perspective into homogeneous paste.",
+    citation: "Doshi & Hauser (Science Advances 2024) · Zhou et al. (2026)",
+    findingPl: "AI podnosi poprawność pojedynczych tekstów, lecz drastycznie obniża różnorodność w całej grupie. Po odcięciu narzędzia u autorów utrzymuje się 'blizna kreatywna'.",
+    findingEn: "AI boosts individual output quality but collapses collective diversity. After removal, users suffer from a persistent 'creative scar'.",
+    habitPl: "Zostaw w tekście osobistą analogię, nietypowe skojarzenie lub chropowate zdanie — to twój podpis.",
+    habitEn: "Preserve personal analogies and unconventional phrasings; what AI tries to smooth out is your intellectual signature."
+  },
+  {
+    id: 7,
+    titlePl: "Test zamkniętego ekranu",
+    titleEn: "The Closed-Screen Test",
+    mantraPl: "To, że rozumiesz odpowiedź AI podczas czytania, nie oznacza, że czegoś się nauczyłeś. Zamknij ekran i spróbuj wyjaśnić to z pamięci.",
+    mantraEn: "Understanding an AI answer while reading it does not mean you learned it. Close the screen and try explaining it from memory.",
+    reflectionPl: "Gładki wywód daje szybki strzał dopaminy i złudzenie wiedzy (metapoznawcze lenistwo). Ale rozpoznawanie tekstu to zupełnie inny proces niż zdolność jego odtworzenia.",
+    reflectionEn: "Fluent prose gives an instant dopamine hit of perceived mastery (metacognitive laziness). But recognition is fundamentally distinct from recall.",
+    citation: "Fan et al. (BJET 2025) · Bisra et al. (2018)",
+    findingPl: "Studenci korzystający z AI deklarowali wysokie poczucie zrozumienia, które nie miało pokrycia w obiektywnych testach transferu wiedzy bez obecności modelu.",
+    findingEn: "Students using AI reported inflated feelings of mastery that failed to translate into actual knowledge transfer on unassisted post-tests.",
+    habitPl: "Po przeczytaniu wyjaśnienia zminimalizuj okno i sformułuj wniosek w 2 własnych zdaniach z głowy.",
+    habitEn: "After reading an explanation, close the window and summarize the core mechanism in 2 sentences from memory."
+  },
+  {
+    id: 8,
+    titlePl: "Wykonanie oddaj, osąd zachowaj",
+    titleEn: "Delegate Tasks, Keep Judgment",
+    mantraPl: "Zlecaj maszynie żmudne wykonanie, ale nigdy nie oddawaj jej osądu. Narzędzie może dać ci dziesięć opcji, ale to ty musisz wiedzieć, dlaczego wybierasz jedną z nich.",
+    mantraEn: "Delegate the grunt work, never the judgment. The tool can give you ten options, but you must know why one is better than the rest.",
+    reflectionPl: "Odciążenie autonomiczne pozwala zaoszczędzić czas na rutynie. Odciążenie zależne — czyli pytanie maszyny 'co mam wybrać?' — prowadzi do atrofii decyzyjnej.",
+    reflectionEn: "Autonomous offloading outsources operational friction. Dependent offloading—asking the machine 'what should I decide?'—erodes your decision-making muscle.",
+    citation: "Zhu et al. (Frontiers in Psychology 2026) · Brynjolfsson et al. (2025)",
+    findingPl: "Badania korelacyjne wykazały, że delegowanie formułowania celów i wniosków na AI wiąże się ze spadkiem motywacji wewnętrznej i zaangażowania poznawczego.",
+    findingEn: "Studies distinguish autonomous from dependent cognitive offloading: delegating final choices correlates with decreased engagement and intrinsic drive.",
+    habitPl: "Nigdy nie pytaj AI 'co powinienem zrobić'. Pytaj o warianty i ewentualne martwe punkty, ale kryteria wyboru ustal sam.",
+    habitEn: "Never prompt 'what should I choose?'. Ask for edge cases and alternative angles, but formulate the decision criteria yourself."
+  },
+  {
+    id: 9,
+    titlePl: "Nauka podstaw buduje mistrza",
+    titleEn: "Basics Build the Master",
+    mantraPl: "Doświadczenie buduje się na powtarzalnych, nudnych zadaniach, które dziś najłatwiej oddać AI. Jeśli pominiesz ten etap, nigdy nie wyrobisz w sobie intuicji eksperta.",
+    mantraEn: "Expertise is built on the repetitive tasks that are easiest to hand off to AI. If you skip those early reps, you never develop real intuition.",
+    reflectionPl: "Ekspert nie zawdzięcza intuicji czytaniu mądrych rad, lecz tysiącom godzin mozolnego czeladnictwa. Jeśli junior przeskoczy ten etap dzięki AI, utknie na zawsze na poziomie asystenta.",
+    reflectionEn: "True intuition is forged through thousands of boring, repetitive reps. If junior workers skip the apprenticeship through AI shortcuts, they remain permanent assistants.",
+    citation: "KPMG & UT Austin (2026) · Shen & Tamkin (Anthropic 2026)",
+    findingPl: "Juniorzy wspomagani AI często osiągali gorsze wyniki niż samo narzędzie z powodu braku umiejętności diagnozy błędów; asystenci kodujący spowalniali naukę pojęć.",
+    findingEn: "Junior professionals using AI underperformed AI alone due to an inability to diagnose model flaws; auto-generating code hindered fundamental conceptual learning.",
+    habitPl: "Ucząc się nowej dziedziny, rozwiązuj pierwsze 50 problemów ręcznie, używając AI jedynie jako surowego egzaminatora.",
+    habitEn: "When entering a new domain, do the first 50 problems completely by hand; use AI only as an unsparing oral examiner."
+  },
+  {
+    id: 10,
+    titlePl: "Kwartalny test niezależności",
+    titleEn: "The Quarterly Solo Test",
+    mantraPl: "Zależność od AI nie wygląda jak słabość – wygląda jak czysta wydajność. Raz na jakiś czas zrób swoją kluczową pracę zupełnie sam, żeby sprawdzić, co w tobie zostało.",
+    mantraEn: "AI dependency rarely feels like a weakness; it feels like efficiency. Every so often, do your core work completely unaided to see what you actually retain.",
+    reflectionPl: "Zanikanie własnych zdolności nie boli. Czujesz się szybki i produktywny aż do momentu, w którym stajesz przed problemem poza 'poszarpaną granicą' możliwości modelu.",
+    reflectionEn: "Cognitive atrophy doesn't hurt. You feel fast and capable right until you hit a novel problem outside the model's jagged technological frontier.",
+    citation: "Dell’Acqua et al. (Organization Science 2026) · Raju (2026)",
+    findingPl: "Konsultanci pracujący z AI na zadaniach wykraczających poza ukryte możliwości modelu popełniali o 19 punktów procentowych więcej błędów z powodu uśpionej czujności.",
+    findingEn: "Consultants using AI on tasks just beyond the model's hidden capability frontier suffered a 19-percentage-point performance drop due to blind overreliance.",
+    habitPl: "Raz na kwartał wybierz jedno ważne zadanie zawodowe i wykonaj je od początku do końca w trybie offline.",
+    habitEn: "Once a quarter, take a high-stakes project deliverable and execute it from start to finish completely offline."
+  }
+];
+
+// Source text is immutable. Research qualifications are kept separately.
+DEKALOG_DATA.forEach(Object.freeze);
+Object.freeze(DEKALOG_DATA);
+
+const I18N = {
+  en: {
+    brandSub: 'An independent mind, by design',
+    views: 'Views',
+    tray: 'Fortune tray',
+    essay: 'Full text',
+    print: 'A4 cheatsheet',
+    sound: 'Toggle synthesized sound',
+    cinema: 'Hide the interface',
+    language: 'Switch between English and Polish',
+    help: 'About this experience',
+    edition: 'Ten rituals for the age of AI',
+    hero1: 'Keep your mind.',
+    hero2: 'Open a fortune.',
+    intro: 'A little wisdom. A little friction. Ten reminders to use artificial intelligence without losing your own.',
+    random: 'Let a fortune find me',
+    heroNote: 'Not a prediction. A practice.',
+    gesture: 'Choose a cookie · Drag to explore · Scroll to get closer',
+    loading: 'Setting the table…',
+    progress: 'Discovery progress',
+    discovered: 'fortunes discovered',
+    complete: 'A whole tray of perspective',
+    choose: 'Choose a fortune',
+    reset: 'Reset the tray',
+    fortune: 'Fortune',
+    close: 'Close',
+    fortuneSections: 'Fortune sections',
+    tabMantra: 'The fortune',
+    tabReflection: 'Why it matters',
+    tabFinding: 'The research',
+    tabHabit: 'Your practice',
+    copy: 'Copy for X / LinkedIn',
+    next: 'Next fortune',
+    freshStart: 'A fresh beginning',
+    resetQuestion: 'Set the table again?',
+    resetInfo: 'This clears your discovery progress on this device. The ten fortunes will still be here.',
+    cancel: 'Keep exploring',
+    smallRitual: 'A small ritual',
+    helpTitle: 'Make room for thought.',
+    helpIntro: 'Choose a cookie, let it open, and take one idea with you. Drag to turn the tray; pinch or scroll to zoom. Every fortune is also accessible using the numbered buttons. System reduced-motion preferences are respected.',
+    keyboard: 'Keyboard',
+    keysNumbers: 'Open fortunes 1–10',
+    keysArrows: 'Move between fortunes or tabs',
+    keysEscape: 'Close a fortune or leave quiet mode',
+    keysTools: 'Language · Sound · Hide interface',
+    keysMore: 'Reset tray · Help',
+    sourceTitle: 'About the project & experiment',
+    editorialNote: 'About this experiment: This project translates empirical studies on deskilling, cognitive offloading, and critical oversight into concise, actionable habits. It was also created as a creative, playful experiment testing OpenAI Astra\'s frontier capabilities in authoring a complex, standalone Three.js 3D WebGL experience (procedural parametric cookies, live physics particles, and Web Audio API synthesis in a single, zero-dependency file).',
+    localTitle: 'A local experience',
+    localInfo: 'Models, textures, and sound are generated on your device. This edition loads only its JavaScript libraries from a CDN. Save the offline edition once to embed those libraries in a single index.html; that copy needs no network connection. Source links open the web only when clicked.',
+    offlineInfo: 'This edition includes its JavaScript libraries. Geometry, textures, audio, and the interface run locally without a network connection. Source links open the web only when clicked.',
+    saveOffline: 'Save offline edition ↓',
+    savingOffline: 'Embedding libraries…',
+    savedOffline: 'Offline edition saved.',
+    offlineError: 'Could not embed the libraries. Check your connection and try again.',
+    offlineReady: 'Offline libraries included',
+    storageOK: 'Discovery progress is saved locally in this browser. No analytics, accounts, or uploads.',
+    storageBad: 'This browser blocked local storage. Your progress will last only for this session.',
+    essayTitle: 'A mind of your own.',
+    essayIntro: 'A personal distillation of empirical research, cognitive science papers, and behavioral tests gathered over months of intense daily work with AI by a power user — distilled through the practical life wisdom and aphorisms of Kevin Kelly. Ten practical aphorisms and daily rituals to think with artificial intelligence without letting it think for you.',
+    contents: 'Contents',
+    researchLabel: 'The research evidence',
+    noteLabel: 'Source note',
+    sourceLink: 'Read the primary source ↗',
+    caveatLink: 'Read methodological commentary ↗',
+    unverified: 'The exact reference and claim have not been independently verified here. Treat this passage as supplied editorial material, not established evidence.',
+    practiceLabel: 'Daily practice',
+    printHelp: 'Ten fortunes. One A4 page. Print at 100% scale, with browser headers and footers off.',
+    printNow: 'Print / Save PDF',
+    printSub: 'Ten practices for keeping your own mind in the age of AI.',
+    printFoot: 'An editorial collection, not a systematic review. Citation labels reproduce the supplied brief; some are unverified. Consult the research notes in the interactive edition. Practices are suggestions, not evidence-based thresholds.',
+    copyManual: 'Copy your fortune',
+    copyManualHint: 'Select the text below and copy it with your device’s usual command.',
+    copied: 'Fortune copied. Take the thought with you.',
+    copyLabel: 'Practice',
+    resetDone: 'A fresh tray. A fresh perspective.',
+    showUI: 'Show the interface',
+    skip: 'Skip to the fortunes',
+    sceneLabel: 'Interactive fortune tray',
+    canvasLabel: 'Ten golden fortune cookies on a dark ceramic tray. Use the numbered buttons to open them.',
+    alreadyOpened: 'discovered',
+    soundOn: 'Sound on. A little crunch.',
+    soundOff: 'Sound off.',
+    audioError: 'Audio is not available in this browser.',
+    networkFail: 'The 3D libraries could not load. Connect to the internet, or open an offline edition. The numbered fortunes, essay, and print view still work.',
+    glFail: 'WebGL2 could not start on this device. The numbered fortunes, essay, and print view still work.',
+    contextFail: 'The graphics context was interrupted. The text remains available while the scene recovers.',
+    paperFoot: 'A THOUGHT TO KEEP',
+    paperBrand: 'THE FORTUNE OF REASON',
+    completeToast: 'Ten fortunes opened. Keep one practice for tomorrow.'
+  },
+
+  pl: {
+    brandSub: 'Niezależny umysł, z wyboru',
+    views: 'Widoki',
+    tray: 'Taca wróżb',
+    essay: 'Pełny tekst',
+    print: 'Ściąga A4',
+    sound: 'Włącz lub wyłącz dźwięk',
+    cinema: 'Ukryj interfejs',
+    language: 'Przełącz język polski i angielski',
+    help: 'O tym doświadczeniu',
+    edition: 'Dziesięć rytuałów w erze AI',
+    hero1: 'Zachowaj swój umysł.',
+    hero2: 'Otwórz wróżbę.',
+    intro: 'Trochę mądrości. Trochę oporu. Dziesięć przypomnień, jak korzystać ze sztucznej inteligencji, nie tracąc własnej.',
+    random: 'Niech wróżba znajdzie mnie',
+    heroNote: 'Nie przepowiednia. Praktyka.',
+    gesture: 'Wybierz ciasteczko · Przeciągnij, by obrócić · Przybliż gestem lub kółkiem',
+    loading: 'Nakrywamy do stołu…',
+    progress: 'Postęp odkrywania',
+    discovered: 'odkrytych wróżb',
+    complete: 'Cała taca nowych perspektyw',
+    choose: 'Wybierz wróżbę',
+    reset: 'Zresetuj tacę',
+    fortune: 'Wróżba',
+    close: 'Zamknij',
+    fortuneSections: 'Sekcje wróżby',
+    tabMantra: 'Aforyzm',
+    tabReflection: 'Dlaczego to ważne',
+    tabFinding: 'Dowody z badań',
+    tabHabit: 'Twoja praktyka',
+    copy: 'Kopiuj na X / LinkedIn',
+    next: 'Następna',
+    freshStart: 'Nowy początek',
+    resetQuestion: 'Nakryć do stołu od nowa?',
+    resetInfo: 'Usuniesz postęp odkrywania na tym urządzeniu. Wszystkie dziesięć wróżb nadal będzie dostępne.',
+    cancel: 'Odkrywaj dalej',
+    smallRitual: 'Mały rytuał',
+    helpTitle: 'Zrób miejsce na myślenie.',
+    helpIntro: 'Wybierz ciasteczko, otwórz je i zabierz ze sobą jedną myśl. Przeciągnij, by obrócić tacę; użyj gestu szczypania lub kółka, by przybliżyć. Każdą wróżbę można też otworzyć numerowanym przyciskiem. Aplikacja uwzględnia systemowe ograniczenie animacji.',
+    keyboard: 'Klawiatura',
+    keysNumbers: 'Otwórz wróżby 1–10',
+    keysArrows: 'Przechodź między wróżbami lub kartami',
+    keysEscape: 'Zamknij wróżbę lub przywróć interfejs',
+    keysTools: 'Język · Dźwięk · Ukryj interfejs',
+    keysMore: 'Reset tacy · Pomoc',
+    sourceTitle: 'O projekcie i eksperymencie',
+    editorialNote: 'O projekcie i eksperymencie: Zbiór ten przekłada ustalenia naukowe dotyczące deskillingu, odciążania poznawczego i kontroli nad modelami na konkretne, codzienne nawyki. Jest to jednocześnie kreatywny, hobbystyczny eksperyment testujący możliwości modelu OpenAI Astra w tworzeniu samodzielnej aplikacji 3D w Three.js (parametryczna geometria ciasteczek, cząsteczki okruchów i synteza dźwięku Web Audio API w jednym, samowystarczalnym pliku bez zewnętrznych modeli).',
+    localTitle: 'Lokalne doświadczenie',
+    localInfo: 'Modele, tekstury i dźwięki powstają na twoim urządzeniu. Ta wersja pobiera z CDN wyłącznie biblioteki JavaScript. Zapisz wersję offline, aby osadzić je w jednym pliku index.html; ta kopia nie potrzebuje internetu. Odnośniki do źródeł łączą się z siecią dopiero po kliknięciu.',
+    offlineInfo: 'Ta wersja zawiera biblioteki JavaScript. Geometria, tekstury, dźwięki i interfejs działają lokalnie bez internetu. Odnośniki do źródeł łączą się z siecią dopiero po kliknięciu.',
+    saveOffline: 'Zapisz wersję offline ↓',
+    savingOffline: 'Osadzanie bibliotek…',
+    savedOffline: 'Zapisano wersję offline.',
+    offlineError: 'Nie udało się osadzić bibliotek. Sprawdź połączenie i spróbuj ponownie.',
+    offlineReady: 'Biblioteki offline są osadzone',
+    storageOK: 'Postęp jest zapisywany lokalnie w tej przeglądarce. Bez analityki, kont i wysyłania danych.',
+    storageBad: 'Przeglądarka zablokowała zapis lokalny. Postęp przetrwa tylko tę sesję.',
+    essayTitle: 'Umysł na własność.',
+    essayIntro: 'Osobista destylacja badań kognitywistycznych, prac naukowych i testów behawioralnych gromadzonych przez miesiące intensywnej, codziennej pracy z AI przez zaawansowanego użytkownika — przefiltrowana przez pryzmat życiowej mądrości i aforyzmów Kevina Kelly’ego. Dziesięć zwięzłych aforyzmów i codziennych rytuałów, które pozwalają myśleć przy wsparciu modeli, nie pozwalając im myśleć za nas.',
+    contents: 'Spis treści',
+    researchLabel: 'Dowód z badań naukowych',
+    noteLabel: 'Uwaga do źródła',
+    sourceLink: 'Przeczytaj źródło pierwotne ↗',
+    caveatLink: 'Przeczytaj komentarz metodologiczny ↗',
+    unverified: 'Nie zweryfikowano tu niezależnie dokładnego źródła i twierdzenia. Traktuj ten fragment jako dostarczony materiał redakcyjny, nie ustalony dowód.',
+    practiceLabel: 'Codzienna praktyka',
+    printHelp: 'Dziesięć wróżb. Jedna strona A4. Drukuj w skali 100%, bez nagłówków i stopek przeglądarki.',
+    printNow: 'Drukuj / Zapisz PDF',
+    printSub: 'Dziesięć praktyk samodzielnego myślenia w erze AI.',
+    printFoot: 'Zbiór redakcyjny, nie przegląd systematyczny. Oznaczenia źródeł odtwarzają dostarczony brief; część jest niezweryfikowana. Zajrzyj do uwag w wersji interaktywnej. Praktyki są sugestiami, nie progami ustalonymi w badaniach.',
+    copyManual: 'Skopiuj swoją wróżbę',
+    copyManualHint: 'Zaznacz tekst poniżej i skopiuj go zwykłym poleceniem swojego urządzenia.',
+    copied: 'Wróżba skopiowana. Zabierz tę myśl ze sobą.',
+    copyLabel: 'Praktyka',
+    resetDone: 'Nowa taca. Nowa perspektywa.',
+    showUI: 'Pokaż interfejs',
+    skip: 'Przejdź do wróżb',
+    sceneLabel: 'Interaktywna taca wróżb',
+    canvasLabel: 'Dziesięć złocistych ciasteczek na ciemnej ceramicznej tacy. Otwieraj je numerowanymi przyciskami.',
+    alreadyOpened: 'odkryta',
+    soundOn: 'Dźwięk włączony. Odrobina chrupnięcia.',
+    soundOff: 'Dźwięk wyłączony.',
+    audioError: 'Dźwięk nie jest dostępny w tej przeglądarce.',
+    networkFail: 'Nie udało się załadować bibliotek 3D. Połącz się z internetem lub otwórz wersję offline. Numerowane wróżby, esej i wydruk nadal działają.',
+    glFail: 'Nie udało się uruchomić WebGL2. Numerowane wróżby, esej i wydruk nadal działają.',
+    contextFail: 'Przerwano kontekst graficzny. Tekst pozostaje dostępny podczas przywracania sceny.',
+    paperFoot: 'MYŚL, KTÓRĄ WARTO ZACHOWAĆ',
+    paperBrand: 'THE FORTUNE OF REASON',
+    completeToast: 'Dziesięć otwartych wróżb. Zachowaj jedną praktykę na jutro.'
+  }
+};
+
+const RESEARCH_NOTES = {
+  1: {
+    en: 'The 48% and −17% results refer specifically to the unguarded GPT Base condition in high-school mathematics, not all AI tutoring. Safeguards largely mitigated the negative learning effect.',
+    pl: 'Wyniki +48% i −17% dotyczą konkretnie wariantu GPT Base bez zabezpieczeń w matematyce szkolnej, nie wszystkich form nauki z AI. Zabezpieczenia w dużej mierze ograniczały negatywny efekt.',
+    links: [
+      { label: 'Bastani et al. (PNAS 2025) — Oficjalna publikacja PNAS ↗', url: 'https://doi.org/10.1073/pnas.2422633122' },
+      { label: 'Bastani et al. — Otwarty manuskrypt autorski (PDF) ↗', url: 'https://hamsabastani.github.io/education_llm.pdf' },
+      { label: 'Noy & Zhang (Science 2023) — Badanie produktywności ↗', url: 'https://doi.org/10.1126/science.adh2586' }
+    ]
+  },
+  2: {
+    en: 'Zhi et al. tested timing of LLM access under time pressure, showing that drafting independently first preserves reasoning depth. Doshi & Hauser observed that early AI prompts cause semantic anchoring.',
+    pl: 'Zhi i in. badali moment udostępnienia LLM pod presją czasu — wykazali, że samodzielny szkic na starcie chroni głębokość analizy. Doshi i Hauser zaobserwowali zjawisko zakotwiczenia w schematach modelu.',
+    links: [
+      { label: 'Zhi, Kumar & Lee (arXiv 2026) — Timing LLM access under time constraints ↗', url: 'https://arxiv.org/abs/2603.08849' },
+      { label: 'Doshi & Hauser (Science Advances 2024) — Collective diversity ↗', url: 'https://doi.org/10.1126/sciadv.adn5290' },
+      { label: 'Steve Raju (2026) — Cognitive Sovereignty Book ↗', url: 'https://cognitivesovereignty.io/' }
+    ]
+  },
+  3: {
+    en: 'Kosmyna et al. is an exploratory preprint with 54 participants, not proof of permanent brain damage. It measures acute cognitive debt and recall drops during assisted essay writing.',
+    pl: 'Praca Kosmyny to preprint z 54 uczestnikami badający dług poznawczy i spadek retencji podczas pisania esejów z ChatGPT. Nie mierzy trwałego uszkodzenia mózgu.',
+    links: [
+      { label: 'Kosmyna et al. (MIT 2025) — Your Brain on ChatGPT (arXiv) ↗', url: 'https://arxiv.org/abs/2506.08872' },
+      { label: 'MIT Media Lab — Strona projektu i publikacja ↗', url: 'https://www.media.mit.edu/publications/your-brain-on-chatgpt/' },
+      { label: 'Roediger & Karpicke (2006) — Test-Enhanced Learning & Retrieval Practice ↗', url: 'https://doi.org/10.1111/j.1467-9280.2006.01693.x' },
+      { label: 'Komentarz metodologiczny do pracy Kosmyny (arXiv 2026) ↗', url: 'https://arxiv.org/abs/2601.00856' }
+    ]
+  },
+  4: {
+    en: 'This randomized trial covered 16 experienced open-source developers and 246 tasks. Its 19% slowdown reflects the real cost of debugging and auditing plausible machine errors.',
+    pl: 'Badanie objęło 16 doświadczonych programistów i 246 zadań. Spowolnienie o 19% odzwierciedla realny koszt debugowania i weryfikacji pozornie poprawnych błędów AI.',
+    links: [
+      { label: 'Becker et al. (arXiv 2025) — Measuring Developer Productivity with AI ↗', url: 'https://arxiv.org/abs/2507.09089' },
+      { label: 'Buçinca et al. (ACM HCI 2021) — Cognitive Forcing Functions ↗', url: 'https://doi.org/10.1145/3449287' },
+      { label: 'Harvard Gajos Lab — Pełny tekst PDF (Buçinca) ↗', url: 'https://www.eecs.harvard.edu/~kgajos/papers/2021/bucinca21trust.pdf' }
+    ]
+  },
+  5: {
+    en: 'Klein & Klein argue theoretically that human agency collapses without foundational domain knowledge. Narayanan & Feigh empirically demonstrated that human supervisors miss errors in AI summaries.',
+    pl: 'Klein & Klein dowodzą teoretycznie, że nadzór człowieka załamuje się bez twardej wiedzy dziedzinowej. Narayanan & Feigh potwierdzają eksperymentalnie, że kontrolerzy masowo pomijają błędy ukryte w podsumowaniach AI.',
+    links: [
+      { label: 'Klein & Klein (Frontiers in AI 2025) — The Extended Hollowed Mind ↗', url: 'https://doi.org/10.3389/frai.2025.1719019' },
+      { label: 'Narayanan & Feigh (IJHCI 2026) — Designing for Oversight ↗', url: 'https://doi.org/10.1080/10447318.2026.2618568' },
+      { label: 'Zhu et al. (AI and Ethics 2026) — Meaningful Human Oversight ↗', url: 'https://doi.org/10.1007/s43681-026-01147-7' }
+    ]
+  },
+  6: {
+    en: 'Doshi & Hauser showed that while individual stories score higher with AI, collective diversity plummets. Zhou et al. documented a persistent "creative scar" after AI assistance was removed.',
+    pl: 'Doshi & Hauser wykazali, że indywidualne teksty zyskują na jakości z AI, ale różnorodność zbiorowa gwałtownie spada. Zhou i in. zaobserwowali zjawisko „blizny kreatywnej” po odcięciu narzędzia.',
+    links: [
+      { label: 'Doshi & Hauser (Science Advances 2024) — Collective Diversity ↗', url: 'https://doi.org/10.1126/sciadv.adn5290' },
+      { label: 'Doshi & Hauser — Wersja autorska (arXiv:2312.00506) ↗', url: 'https://arxiv.org/abs/2312.00506' },
+      { label: 'Zhou et al. (Technology in Society 2026) — Creative Scar Without AI ↗', url: 'https://doi.org/10.1016/j.techsoc.2025.103087' }
+    ]
+  },
+  7: {
+    en: 'Fan et al. identified "metacognitive laziness" where fluent explanations create a false feeling of comprehension. Bisra et al. confirmed that self-explanation is necessary for true transfer.',
+    pl: 'Fan i in. opisali zjawisko „lenistwa metapoznawczego”, w którym płynne wyjaśnienia dają złudne poczucie opanowania wiedzy. Metaanaliza Bisry potwierdza, że tylko aktywne samoobjaśnianie buduje trwałe zrozumienie.',
+    links: [
+      { label: 'Fan et al. (BJET 2025) — Beware of Metacognitive Laziness ↗', url: 'https://doi.org/10.1111/bjet.13544' },
+      { label: 'Fan et al. — Wersja autorska (arXiv:2412.09315) ↗', url: 'https://arxiv.org/abs/2412.09315' },
+      { label: 'Bisra et al. (2018) — Inducing Self-Explanation Meta-Analysis ↗', url: 'https://doi.org/10.1007/s10648-018-9434-x' }
+    ]
+  },
+  8: {
+    en: 'Zhu et al. distinguish autonomous offloading (preserving criteria) from dependent offloading (outsourcing choices). Brynjolfsson et al. found AI delivers value in routine tasks but requires human judgment in novel cases.',
+    pl: 'Zhu i in. rozróżniają odciążenie autonomiczne (zachowanie własnych celów i kryteriów) od odciążenia zależnego (oddanie decyzji maszynie). Brynjolfsson i in. wykazali, że AI pomaga w rutynie, ale wymaga ludzkiego osądu w nietypowych sytuacjach.',
+    links: [
+      { label: 'Zhu et al. (Frontiers in Psychology 2026) — Autonomous vs Dependent Offloading ↗', url: 'https://doi.org/10.3389/fpsyg.2026.1878629' },
+      { label: 'Brynjolfsson, Li & Raymond (QJE 2025) — Generative AI at Work ↗', url: 'https://doi.org/10.1093/qje/qjae044' },
+      { label: 'Brynjolfsson et al. — Pełny tekst PDF (Danielle Li) ↗', url: 'https://danielle.li/assets/docs/GenerativeAIatWork.pdf' }
+    ]
+  },
+  9: {
+    en: 'KPMG and UT Austin found junior workers using AI often underperform AI alone due to a lack of diagnostic and monitoring skills. Shen & Tamkin observed that code generation hinders basic skill formation.',
+    pl: 'KPMG i UT Austin zauważyli, że młodzi pracownicy z AI osiągają gorsze wyniki niż samo narzędzie z powodu braku umiejętności kontroli. Shen & Tamkin wykazali, że generowanie gotowego kodu utrudnia naukę pojęć.',
+    links: [
+      { label: 'KPMG & UT Austin (2026) — AI & Early-Career Success ↗', url: 'https://kpmg.com/us/en/articles/2026/ai-redefining-career-success-empower-your-talent-thrive.html' },
+      { label: 'Shen & Tamkin (Anthropic / arXiv 2026) — AI & Coding Skill Formation ↗', url: 'https://arxiv.org/abs/2601.20245' },
+      { label: 'Anthropic Research — Oficjalny raport z badań ↗', url: 'https://www.anthropic.com/research/AI-assistance-coding-skills' }
+    ]
+  },
+  10: {
+    en: 'Dell\'Acqua et al. showed that consultants using AI on tasks outside the model\'s "jagged frontier" had a 19-percentage-point drop in correctness due to blind trust. Regular unassisted practice prevents unseen atrophy.',
+    pl: 'Dell\'Acqua i in. dowiedli, że konsultanci używający AI na zadaniach wykraczających poza „poszarpaną granicę” popełniali o 19 punktów procentowych więcej błędów z powodu uśpionej czujności. Okresowy post technologiczny pozwala zweryfikować realne zdolności.',
+    links: [
+      { label: 'Dell\'Acqua et al. (Organization Science 2026) — The Jagged Frontier ↗', url: 'https://doi.org/10.1287/orsc.2025.21838' },
+      { label: 'Steve Raju (2026) — Cognitive Sovereignty Book ↗', url: 'https://cognitivesovereignty.io/' }
+    ]
+  }
+};
+
+const $ = id => document.getElementById(id);
+
+const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;'
+}[char]));
+
+const pad = n => String(n).padStart(2, '0');
+
+let storageAvailable = true;
+
+const storage = {
+  read(key, fallback) {
+    let value;
+    try {
+      value = localStorage.getItem(key);
+    } catch {
+      storageAvailable = false;
+      return fallback;
+    }
+
+    if (value === null) return fallback;
+
+    try {
+      return JSON.parse(value);
+    } catch {
+      return fallback;
+    }
+  },
+
+  write(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch {
+      storageAvailable = false;
+    }
+  }
+};
+
+const savedIDs = storage.read('opened_cookies', []);
+const savedLanguage = storage.read('fortune_language', 'en');
+const mediaMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+const state = {
+  lang: savedLanguage === 'pl' ? 'pl' : 'en',
+  opened: new Set(
+    Array.isArray(savedIDs)
+      ? savedIDs.filter(id => Number.isInteger(id) && id >= 1 && id <= 10)
+      : []
+  ),
+  selected: null,
+  mode: 'tray',
+  tab: 'reflection',
+  sound: storage.read('fortune_sound', false) === true,
+  reduced: mediaMotion.matches,
+  cinema: false,
+  ready: false,
+  failure: null
+};
+
+const t = key => I18N[state.lang][key] || key;
+const field = (entry, key) => entry[key + (state.lang === 'pl' ? 'Pl' : 'En')];
+
+let engine = null;
+let lastTrigger = null;
+let toastTimer = null;
+let announceTimer = null;
+
+const isOffline = () =>
+  JSON.parse($('import-map').textContent).imports.three.startsWith('data:');
+
+function toast(message) {
+  $('toast').textContent = message;
+  $('toast').classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $('toast').classList.remove('show'), 3200);
+}
+
+function announce(message) {
+  clearTimeout(announceTimer);
+  $('announcer').textContent = '';
+  announceTimer = setTimeout(() => $('announcer').textContent = message, 70);
+}
+
+
+function researchMarkup(entry) {
+  const note = RESEARCH_NOTES[entry.id];
+  if (!note) return '';
+
+  let linksHTML = '';
+  if (note.links && note.links.length > 0) {
+    linksHTML = note.links.map(l => `
+      <a href="${l.url}" target="_blank" rel="noopener noreferrer" class="research-link-badge">
+        ${escapeHTML(l.label)}
+      </a>
+    `).join('');
+  } else if (note.url) {
+    linksHTML = `
+      <a href="${note.url}" target="_blank" rel="noopener noreferrer" class="research-link-badge">
+        ${escapeHTML(t('sourceLink'))}
+      </a>
+    `;
+  }
+
+  return `
+    <div class="source-note">
+      <b>${escapeHTML(t('noteLabel'))}:</b><br>
+      <span style="display:block; margin: 6px 0 12px 0;">${escapeHTML(note[state.lang])}</span>
+      <div class="research-links-container">
+        ${linksHTML}
+      </div>
+    </div>
+  `;
+}
+
+function updateProgress() {
+  const count = state.opened.size;
+
+  $('progress-number').textContent = `${pad(count)} / 10`;
+  $('progress-text').textContent = t(count === 10 ? 'complete' : 'discovered');
+  $('progress-fill').style.width = `${count * 10}%`;
+  $('progressbar').setAttribute('aria-valuenow', String(count));
+
+  for (const button of $('fortune-index').children) {
+    const id = Number(button.dataset.cookie);
+    const entry = DEKALOG_DATA[id - 1];
+
+    button.dataset.seen = String(state.opened.has(id));
+    button.setAttribute('aria-current', String(state.selected === id));
+    button.setAttribute(
+      'aria-label',
+      `${pad(id)}. ${field(entry, 'title')}${
+        state.opened.has(id) ? `, ${t('alreadyOpened')}` : ''
+      }`
+    );
+    button.title = field(entry, 'title');
+  }
+
+  $('storage-note').textContent = t(storageAvailable ? 'storageOK' : 'storageBad');
+}
+
+function markOpened(id) {
+  const wasComplete = state.opened.size === 10;
+
+  state.opened.add(id);
+  storage.write('opened_cookies', [...state.opened]);
+  updateProgress();
+
+  if (!wasComplete && state.opened.size === 10) {
+    toast(t('completeToast'));
+  }
+}
+
+
+function renderPanel() {
+  if (state.selected === null) return;
+
+  const entry = DEKALOG_DATA[state.selected - 1];
+
+  $('fortune-number').textContent = `${pad(entry.id)} / 10`;
+  $('fortune-title').textContent = field(entry, 'title');
+
+  document.querySelectorAll('[data-tab]').forEach(button => {
+    const active = button.dataset.tab === state.tab;
+    button.setAttribute('aria-selected', String(active));
+    button.tabIndex = active ? 0 : -1;
+  });
+
+  const content = $('tab-content');
+  content.setAttribute('aria-labelledby', `tab-${state.tab}`);
+
+  if (state.tab === 'finding') {
+    content.innerHTML = `
+      <div class="panel-section evidence-section" style="padding: 22px 24px; background: rgba(10, 12, 16, 0.55); border: 1px solid rgba(212, 163, 89, 0.3); border-left: 3px solid var(--gold); border-radius: 10px;">
+        <div class="section-title">${escapeHTML(t('researchLabel'))}</div>
+        <p class="section-text" style="font-size: 17.5px; line-height: 1.74; color: #f0ebe1; margin: 10px 0 16px;">
+          ${escapeHTML(field(entry, 'finding'))}
+        </p>
+        <div class="citation" style="font-size: 13.5px; margin-top: 14px;">
+          <span style="opacity: 0.6; text-transform: uppercase; font-size: 11px; letter-spacing: 0.1em; display: block; margin-bottom: 4px;">Publikacja / Badanie:</span>
+          ${escapeHTML(entry.citation)}
+        </div>
+        ${researchMarkup(entry)}
+      </div>
+
+      <div class="panel-tab-cta">
+        <button type="button" class="tab-cta-button" onclick="setTab('habit', true)">
+          <span>${escapeHTML(t('tabHabit'))} →</span>
+        </button>
+      </div>
+    `;
+  } else if (state.tab === 'habit') {
+    content.innerHTML = `
+      <div class="panel-section habit-section" style="padding: 24px 26px; background: rgba(212, 163, 89, 0.08); border: 1px solid rgba(212, 163, 89, 0.35); border-left: 3px solid var(--gold); border-radius: 10px;">
+        <div class="section-title">${escapeHTML(t('practiceLabel'))}</div>
+        <p class="habit-text" style="font-size: 18.5px; line-height: 1.76; color: #fff9ef; font-weight: 500; margin: 12px 0 0;">
+          ${escapeHTML(field(entry, 'habit'))}
+        </p>
+      </div>
+
+      <div class="panel-tab-cta">
+        <button type="button" class="tab-cta-button" onclick="setTab('reflection', true)">
+          <span>← ${escapeHTML(t('tabReflection'))}</span>
+        </button>
+      </div>
+    `;
+  } else {
+    // Default: 'reflection' (Why it matters)
+    content.innerHTML = `
+      <div class="panel-mantra-bar">
+        <div class="panel-mantra-quote">“${escapeHTML(field(entry, 'mantra'))}”</div>
+      </div>
+
+      <div class="panel-section reflection-section">
+        <div class="section-title">${escapeHTML(t('tabReflection'))}</div>
+        <p class="section-text" style="font-size: 18px; line-height: 1.76; color: #f7f4ed; margin: 10px 0 0;">
+          ${escapeHTML(field(entry, 'reflection'))}
+        </p>
+      </div>
+
+      <div class="panel-tab-cta">
+        <button type="button" class="tab-cta-button" onclick="setTab('finding', true)">
+          <span>${escapeHTML(t('tabFinding'))} →</span>
+        </button>
+      </div>
+    `;
+  }
+
+  content.scrollTop = 0;
+}
+
+function renderReading() {
+  $('essay-toc').innerHTML = DEKALOG_DATA.map(entry => `
+    <a href="#essay-${entry.id}">
+      <span>${pad(entry.id)}</span>${escapeHTML(field(entry, 'title'))}
+    </a>
+  `).join('');
+
+  $('essay-entries').innerHTML = DEKALOG_DATA.map(entry => `
+    <article class="essay-entry" id="essay-${entry.id}">
+      <div class="eyebrow">
+        ${escapeHTML(t('fortune'))} ${pad(entry.id)} / 10
+      </div>
+      <h2>${escapeHTML(field(entry, 'title'))}</h2>
+      <blockquote>“${escapeHTML(field(entry, 'mantra'))}”</blockquote>
+      <p class="essay-body-text">${escapeHTML(field(entry, 'reflection'))}</p>
+      <div class="essay-evidence">
+        <h3 class="mono gold">${escapeHTML(t('researchLabel'))}</h3>
+        <p class="essay-finding-text">${escapeHTML(field(entry, 'finding'))}</p>
+        <div class="citation">${escapeHTML(entry.citation)}</div>
+        ${researchMarkup(entry)}
+      </div>
+      <div class="essay-habit">
+        <h3 class="mono gold">${escapeHTML(t('practiceLabel'))}</h3>
+        <p class="essay-habit-text">${escapeHTML(field(entry, 'habit'))}</p>
+      </div>
+    </article>
+  `).join('');
+
+  $('print-grid').innerHTML = DEKALOG_DATA.map(entry => `
+    <article class="print-card">
+      <h2>
+        <span>${pad(entry.id)}</span>${escapeHTML(field(entry, 'title'))}
+      </h2>
+      <p>${escapeHTML(field(entry, 'mantra'))}</p>
+      <p class="print-habit">
+        <strong>${escapeHTML(t('copyLabel'))}:</strong>
+        ${escapeHTML(field(entry, 'habit'))}
+      </p>
+      <p class="print-citation">${escapeHTML(entry.citation)}</p>
+    </article>
+  `).join('');
+}
+
+function renderLanguage() {
+  document.documentElement.lang = state.lang;
+
+  document.querySelectorAll('[data-i18n]').forEach(element => {
+    element.textContent = t(element.dataset.i18n);
+  });
+
+  document.querySelectorAll('[data-aria]').forEach(element => {
+    element.setAttribute('aria-label', t(element.dataset.aria));
+  });
+
+  document.querySelectorAll('[data-title]').forEach(element => {
+    element.title = t(element.dataset.title);
+  });
+
+    $('language').innerHTML = `
+    <span class="lang-opt ${state.lang === 'en' ? 'active' : ''}">EN</span><span class="lang-sep">/</span><span class="lang-opt ${state.lang === 'pl' ? 'active' : ''}">PL</span>
+  `;
+  $('sound').setAttribute('aria-pressed', String(state.sound));
+
+  $('sound-waves').setAttribute(
+    'd',
+    state.sound
+      ? 'M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14'
+      : 'm16 9 5 6m0-6-5 6'
+  );
+
+  $('local-info').textContent = t(isOffline() ? 'offlineInfo' : 'localInfo');
+
+  if (isOffline()) {
+    $('save-offline').textContent = t('offlineReady');
+    $('save-offline').disabled = true;
+  }
+
+  if (state.failure) {
+    $('load-status').textContent = t(state.failure);
+  }
+
+  updateProgress();
+  renderPanel();
+  renderReading();
+  engine?.languageChanged();
+}
+
+function setTab(name, focus = false) {
+  state.tab = name;
+  renderPanel();
+  if (focus) $(`tab-${name}`).focus();
+}
+
+function closeFortune(restoreFocus = true) {
+  if (state.selected === null) return;
+
+  state.selected = null;
+  document.body.dataset.open = 'false';
+
+  $('fortune-panel').inert = true;
+  $('fortune-panel').setAttribute('aria-hidden', 'true');
+  $('hero').inert = state.cinema;
+
+  engine?.close();
+  updateProgress();
+
+  if (restoreFocus && lastTrigger?.isConnected) {
+    lastTrigger.focus({ preventScroll: true });
+  }
+}
+
+function setMode(mode) {
+  if (!['tray', 'essay', 'print'].includes(mode)) return;
+
+  closeFortune(false);
+  if (state.cinema) setCinema(false);
+
+  state.mode = mode;
+  document.body.dataset.mode = mode;
+
+  for (const name of ['tray', 'essay', 'print']) {
+    $(`${name}View`).hidden = name !== mode;
+  }
+
+  document.querySelectorAll('.mode-nav [data-mode]').forEach(button => {
+    button.setAttribute('aria-pressed', String(button.dataset.mode === mode));
+  });
+
+  $('cinema').disabled = mode !== 'tray';
+  engine?.modeChanged();
+  window.scrollTo(0, 0);
+}
+
+function openFortune(id, keyboard = false) {
+  if (!Number.isInteger(id) || id < 1 || id > 10) return;
+  if (state.mode !== 'tray') setMode('tray');
+
+  if (
+    document.activeElement instanceof HTMLElement &&
+    !$('fortune-panel').contains(document.activeElement)
+  ) {
+    lastTrigger = document.activeElement;
+  }
+
+  if (!lastTrigger || lastTrigger === document.body) {
+    lastTrigger = $('fortune-index').querySelector(`[data-cookie="${id}"]`);
+  }
+
+  state.selected = id;
+  state.tab = 'reflection';
+
+  document.body.dataset.open = 'true';
+  $('hero').inert = true;
+  $('fortune-panel').inert = state.cinema;
+  $('fortune-panel').setAttribute('aria-hidden', String(state.cinema));
+
+  renderPanel();
+  updateProgress();
+
+  if (state.sound) Audio.unlock();
+
+  if (engine && state.ready) {
+    engine.select(id);
+  } else {
+    markOpened(id);
+  }
+
+  announce(`${t('fortune')} ${id}. ${field(DEKALOG_DATA[id - 1], 'title')}`);
+
+  if (keyboard && !state.cinema) {
+    $('tab-reflection')?.focus({ preventScroll: true });
+  }
+}
+
+function chooseRandom() {
+  const pool = DEKALOG_DATA.filter(entry => !state.opened.has(entry.id));
+  const choices = pool.length ? pool : DEKALOG_DATA;
+  openFortune(choices[Math.floor(Math.random() * choices.length)].id);
+}
+
+function setCinema(value) {
+  if (state.mode !== 'tray') return;
+
+  state.cinema = value;
+  document.body.dataset.cinema = String(value);
+
+  $('topbar').inert = value;
+  $('hero').inert = value || state.selected !== null;
+  $('tray-footer').inert = value;
+  $('fortune-panel').inert = value || state.selected === null;
+  $('fortune-panel').setAttribute(
+    'aria-hidden',
+    String(value || state.selected === null)
+  );
+
+  if (value) {
+    $('exit-cinema').focus();
+  } else {
+    ($('cinema').offsetParent ? $('cinema') : $('help')).focus({
+      preventScroll: true
+    });
+  }
+
+  setTimeout(() => {
+    engine?.resize();
+  }, 30);
+  setTimeout(() => {
+    engine?.resize();
+  }, 120);
+}
+
+function openDialog(id) {
+  if (!$(id).open) $(id).showModal();
+}
+
+const Audio = (() => {
+  let context = null;
+  let master = null;
+
+  async function unlock() {
+    if (!state.sound) return;
+
+    try {
+      if (!context) {
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        if (!AudioClass) throw Error('Audio unavailable');
+
+        context = new AudioClass();
+        master = context.createGain();
+        master.gain.value = .33;
+        master.connect(context.destination);
+      }
+
+      if (context.state !== 'running') await context.resume();
+    } catch {
+      state.sound = false;
+      storage.write('fortune_sound', false);
+      renderLanguage();
+      toast(t('audioError'));
+    }
+  }
+
+  function noise(duration, frequency, volume, pink = false) {
+    if (!state.sound || !context || context.state !== 'running') return;
+
+    const now = context.currentTime;
+    const buffer = context.createBuffer(
+      1,
+      Math.ceil(context.sampleRate * duration),
+      context.sampleRate
+    );
+
+    const samples = buffer.getChannelData(0);
+    let low = 0;
+
+    for (let i = 0; i < samples.length; i++) {
+      const white = Math.random() * 2 - 1;
+      low = .94 * low + .06 * white;
+      samples[i] = pink ? low * 3 : white;
+    }
+
+    const source = context.createBufferSource();
+    const filter = context.createBiquadFilter();
+    const gain = context.createGain();
+
+    source.buffer = buffer;
+    filter.type = 'bandpass';
+    filter.frequency.value = frequency;
+    filter.Q.value = pink ? .6 : 1.5;
+
+    gain.gain.setValueAtTime(.0001, now);
+    gain.gain.exponentialRampToValueAtTime(volume, now + .004);
+    gain.gain.exponentialRampToValueAtTime(.0001, now + duration);
+
+    source.connect(filter);
+    filter.connect(gain);
+    gain.connect(master);
+
+    source.start(now);
+    source.stop(now + duration + .02);
+
+    source.onended = () => {
+      source.disconnect();
+      filter.disconnect();
+      gain.disconnect();
+    };
+  }
+
+  return {
+    unlock,
+    crunch() {
+      noise(.09, 1800, .64);
+      noise(.045, 3200, .22);
+    },
+    paper() {
+      noise(.25, 800, .12, true);
+    },
+    suspend() {
+      if (context?.state === 'running') {
+        context.suspend().catch(() => {});
+      }
+    }
+  };
+})();
+
+async function copyFortune() {
+  if (state.selected === null) return;
+
+  const entry = DEKALOG_DATA[state.selected - 1];
+  const text = [
+    field(entry, 'title'),
+    '',
+    field(entry, 'mantra'),
+    '',
+    `${t('copyLabel')}: ${field(entry, 'habit')}`,
+    '',
+    '— The Fortune of Reason'
+  ].join('\n');
+
+  let copied = false;
+
+  try {
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(text);
+      copied = true;
+    }
+  } catch {}
+
+  if (!copied) {
+    const area = document.createElement('textarea');
+
+    area.value = text;
+    area.readOnly = true;
+    area.style.cssText = 'position:fixed;left:-9999px;top:0';
+
+    document.body.append(area);
+    area.select();
+    area.setSelectionRange(0, text.length);
+
+    try {
+      copied = document.execCommand('copy');
+    } catch {}
+
+    area.remove();
+  }
+
+  if (copied) {
+    toast(t('copied'));
+  } else {
+    $('copy-value').value = text;
+    openDialog('copy-dialog');
+    $('copy-value').focus();
+    $('copy-value').select();
+  }
+}
+
+// Only JavaScript library source is fetched here, never media or model assets.
+// The resulting download has data-URI import maps and makes no startup requests.
+async function saveOffline() {
+  const button = $('save-offline');
+
+  button.disabled = true;
+  button.textContent = t('savingOffline');
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 45000);
+
+  try {
+    const urls = [
+      'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js',
+      'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js',
+      'https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js'
+    ];
+
+    const sources = await Promise.all(urls.map(async url => {
+      const response = await fetch(url, {
+        mode: 'cors',
+        signal: controller.signal
+      });
+
+      if (!response.ok) {
+        throw Error(`Library HTTP ${response.status}`);
+      }
+
+      return response.text();
+    }));
+
+    function dataURI(source) {
+      const bytes = new TextEncoder().encode(source);
+      let binary = '';
+
+      for (let i = 0; i < bytes.length; i += 8192) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+      }
+
+      return 'data:text/javascript;base64,' + btoa(binary);
+    }
+
+    const gsapModule = [
+      'const module={exports:{}};const exports=module.exports;',
+      sources[2],
+      'export const gsap=module.exports.gsap;'
+    ].join('\n');
+
+    const clone = document.documentElement.cloneNode(true);
+
+    clone.querySelector('#import-map').textContent = JSON.stringify({
+      imports: {
+        three: dataURI(sources[0]),
+        'three/addons/controls/OrbitControls.js': dataURI(sources[1]),
+        gsap: dataURI(gsapModule)
+      }
+    });
+
+    clone.querySelector('#canvasMount').replaceChildren();
+
+    clone.querySelectorAll('.mode-nav [data-mode]').forEach(button => {
+      button.setAttribute(
+        'aria-pressed',
+        String(button.dataset.mode === 'tray')
+      );
+    });
+
+    clone.querySelector('#cinema').disabled = false;
+
+    clone.querySelectorAll('dialog[open]').forEach(dialog => {
+      dialog.removeAttribute('open');
+    });
+
+    clone.querySelectorAll('[inert]').forEach(element => {
+      element.removeAttribute('inert');
+    });
+
+    clone.querySelector('#fortune-panel').setAttribute('inert', '');
+    clone.querySelector('#fortune-panel').setAttribute('aria-hidden', 'true');
+
+    clone.querySelector('#load-status').hidden = false;
+    clone.querySelector('#load-status').className = '';
+
+    clone.querySelector('#trayView').hidden = false;
+    clone.querySelector('#essayView').hidden = true;
+    clone.querySelector('#printView').hidden = true;
+
+    const body = clone.querySelector('body');
+    body.dataset.mode = 'tray';
+    body.dataset.open = 'false';
+    body.dataset.cinema = 'false';
+
+    clone.querySelector('#tooltip').hidden = true;
+    clone.querySelector('#toast').className = '';
+
+    const blob = new Blob(
+      ['<!DOCTYPE html>\n', clone.outerHTML],
+      { type: 'text/html;charset=utf-8' }
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+
+    link.href = url;
+    link.download = 'index.html';
+    document.body.append(link);
+    link.click();
+    link.remove();
+
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    toast(t('savedOffline'));
+  } catch (error) {
+    console.warn('Offline export:', error);
+    toast(t('offlineError'));
+  } finally {
+    clearTimeout(timer);
+    button.disabled = false;
+    button.textContent = t('saveOffline');
+  }
+}
+
+$('fortune-index').innerHTML = DEKALOG_DATA.map(entry => `
+  <button type="button" data-cookie="${entry.id}">${pad(entry.id)}</button>
+`).join('');
+
+$('fortune-index').addEventListener('click', event => {
+  const button = event.target.closest('[data-cookie]');
+  if (button) {
+    openFortune(Number(button.dataset.cookie), event.detail === 0);
+  }
+});
+
+$('fortune-index').addEventListener('focusin', event => {
+  const button = event.target.closest('[data-cookie]');
+  if (button) engine?.hover(Number(button.dataset.cookie));
+});
+
+$('fortune-index').addEventListener('focusout', () => engine?.hover(null));
+
+$('fortune-index').addEventListener('pointerover', event => {
+  const button = event.target.closest('[data-cookie]');
+  if (button) engine?.hover(Number(button.dataset.cookie));
+});
+
+$('fortune-index').addEventListener('pointerleave', () => engine?.hover(null));
+
+$('random').onclick = chooseRandom;
+$('close-panel').onclick = () => closeFortune();
+$('next').onclick = () => openFortune((state.selected || 0) % 10 + 1);
+$('reset').onclick = () => openDialog('reset-dialog');
+$('help').onclick = () => openDialog('help-dialog');
+$('copy').onclick = copyFortune;
+
+$('brand-home').onclick = event => {
+  event.preventDefault();
+  setMode('tray');
+};
+
+$('language').onclick = () => {
+  state.lang = state.lang === 'en' ? 'pl' : 'en';
+  storage.write('fortune_language', state.lang);
+  renderLanguage();
+};
+
+$('sound').onclick = () => {
+  state.sound = !state.sound;
+  storage.write('fortune_sound', state.sound);
+  renderLanguage();
+
+  if (state.sound) Audio.unlock();
+  else Audio.suspend();
+
+  toast(t(state.sound ? 'soundOn' : 'soundOff'));
+};
+
+$('cinema').onclick = () => setCinema(true);
+$('exit-cinema').onclick = () => setCinema(false);
+$('print-now').onclick = () => window.print();
+$('save-offline').onclick = saveOffline;
+
+$('confirm-reset').onclick = () => {
+  $('reset-dialog').close();
+  state.opened.clear();
+  storage.write('opened_cookies', []);
+  closeFortune(false);
+  engine?.reset();
+  updateProgress();
+  toast(t('resetDone'));
+  $('reset').focus({ preventScroll: true });
+};
+
+document.querySelectorAll('[data-close]').forEach(button => {
+  button.onclick = () => $(button.dataset.close).close();
+});
+
+document.querySelectorAll('.mode-nav [data-mode]').forEach(button => {
+  button.onclick = () => setMode(button.dataset.mode);
+});
+
+document.querySelectorAll('[data-tab]').forEach(button => {
+  button.onclick = () => setTab(button.dataset.tab);
+});
+
+document.querySelector('.tabs').addEventListener('keydown', event => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+
+  event.preventDefault();
+  event.stopPropagation();
+
+  const names = ['mantra', 'reflection', 'finding', 'habit'];
+  const index = names.indexOf(state.tab);
+
+  const next = event.key === 'Home'
+    ? 0
+    : event.key === 'End'
+      ? 3
+      : (index + (event.key === 'ArrowRight' ? 1 : 3)) % 4;
+
+  setTab(names[next], true);
+});
+
+document.addEventListener('keydown', event => {
+  if (
+    event.ctrlKey ||
+    event.metaKey ||
+    event.altKey ||
+    event.target.matches('textarea,input,select,[contenteditable=true]')
+  ) return;
+
+  if (document.querySelector('dialog[open]')) return;
+
+  if (event.key === 'Escape') {
+    event.preventDefault();
+
+    if (state.cinema) setCinema(false);
+    else closeFortune();
+
+    return;
+  }
+
+  const key = event.key.toLowerCase();
+
+  if (key === 'l') {
+    $('language').click();
+  } else if (key === 's') {
+    $('sound').click();
+  } else if (key === 'h') {
+    setCinema(!state.cinema);
+  } else if (key === 'r') {
+    openDialog('reset-dialog');
+  } else if (key === '?') {
+    openDialog('help-dialog');
+  } else if (state.mode === 'tray' && /^[0-9]$/.test(key)) {
+    event.preventDefault();
+    openFortune(key === '0' ? 10 : Number(key), true);
+  } else if (
+    state.mode === 'tray' &&
+    ['ArrowLeft', 'ArrowRight'].includes(event.key)
+  ) {
+    event.preventDefault();
+    const direction = event.key === 'ArrowRight' ? 1 : -1;
+
+    if (state.selected !== null) {
+      openFortune((state.selected - 1 + direction + 10) % 10 + 1);
+    } else {
+      const current = Number(document.activeElement.dataset.cookie) || 1;
+      const id = (current - 1 + direction + 10) % 10 + 1;
+
+      $('fortune-index').querySelector(`[data-cookie="${id}"]`).focus();
+    }
+  }
+});
+
+function motionChanged(event) {
+  state.reduced = event.matches;
+  engine?.motionChanged();
+}
+
+if (mediaMotion.addEventListener) {
+  mediaMotion.addEventListener('change', motionChanged);
+} else {
+  mediaMotion.addListener(motionChanged);
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) Audio.suspend();
+  engine?.visibilityChanged();
+});
+
+window.addEventListener('storage', event => {
+  if (event.key !== 'opened_cookies') return;
+
+  try {
+    const value = JSON.parse(event.newValue || '[]');
+
+    state.opened = new Set(
+      Array.isArray(value)
+        ? value.filter(id => Number.isInteger(id) && id >= 1 && id <= 10)
+        : []
+    );
+
+    updateProgress();
+    engine?.syncProgress();
+  } catch {}
+});
+
+renderLanguage();
+
+window.FORTUNE = {
+  state,
+  data: DEKALOG_DATA,
+  t,
+  field,
+  open: openFortune,
+  markOpened,
+  Audio,
+  toast,
+
+  attach(value) {
+    engine = value;
+    state.ready = true;
+    state.failure = null;
+    $('load-status').hidden = true;
+
+    if (state.selected !== null) {
+      engine.select(state.selected);
+    }
+  },
+
+  fail(code, error) {
+    state.ready = false;
+    state.failure = code;
+
+    const status = $('load-status');
+    status.hidden = false;
+    status.classList.add('failed');
+    status.textContent = t(code);
+
+    if (error) console.warn('Fortune scene:', error);
+  },
+
+  recover() {
+    state.ready = true;
+    state.failure = null;
+    $('load-status').hidden = true;
+  },
+
+  announce
+};
+
+setTimeout(() => {
+  if (!state.ready && !state.failure) {
+    window.FORTUNE.fail('networkFail');
+  }
+}, 12000);
+</script>
+
+<script type="module" id="scene-source">
+const F = window.FORTUNE;
+
+let THREE;
+let OrbitControls;
+let gsap;
+
+try {
+  [THREE, { OrbitControls }, { gsap }] = await Promise.all([
+    import('three'),
+    import('three/addons/controls/OrbitControls.js'),
+    import('gsap')
+  ]);
+} catch (error) {
+  F.fail('networkFail', error);
+}
+
+if (THREE && OrbitControls && gsap) {
+  try {
+    F.attach(createFortuneScene());
+  } catch (error) {
+    F.fail('glFail', error);
+  }
+}
+
+function createFortuneScene() {
+  const mount = document.getElementById('canvasMount');
+  const host = document.getElementById('scene');
+
+  const resources = new Set();
+  const keep = object => (resources.add(object), object);
+  const small = matchMedia('(max-width:820px)').matches;
+
+  let disposed = false;
+  let lost = false;
+  let raf = 0;
+  let previous = performance.now();
+  let timeline = null;
+  let selected = null;
+  let hovered = null;
+  let pointerDown = null;
+  let multiTouch = false;
+  let moved = false;
+  let particleActive = false;
+  let frameCost = 16;
+  let qualityFrames = 0;
+
+  const pointerIDs = new Set();
+  const pointer = new THREE.Vector2(2, 2);
+  const raycaster = new THREE.Raycaster();
+
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: false,
+    powerPreference: 'high-performance'
+  });
+
+  renderer.setClearColor(0x0c0e12, 1);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.1;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  let pixelRatio = Math.min(devicePixelRatio || 1, small ? 1.5 : 2);
+  renderer.setPixelRatio(pixelRatio);
+
+  mount.replaceChildren(renderer.domElement);
+  renderer.domElement.setAttribute('aria-hidden', 'true');
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0c0e12);
+  scene.fog = new THREE.FogExp2(0x0c0e12, .028);
+
+  const camera = new THREE.PerspectiveCamera(45, 1, .1, 100);
+  camera.position.set(0, 7, 9);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = .05;
+  controls.enablePan = false;
+  controls.minDistance = 4;
+  controls.maxDistance = 14;
+  controls.minPolarAngle = .3;
+  controls.maxPolarAngle = Math.PI / 2.15;
+  controls.rotateSpeed = .55;
+  controls.zoomSpeed = .6;
+  controls.target.set(0, .28, 0);
+  controls.touches.ONE = THREE.TOUCH.ROTATE;
+  controls.touches.TWO = THREE.TOUCH.DOLLY_ROTATE;
+
+  const overviewDirection = new THREE.Vector3(0, 7, 9).normalize();
+
+  const key = new THREE.DirectionalLight(0xfff5e6, 2.2);
+  key.position.set(5, 10, 6);
+  key.castShadow = true;
+  key.shadow.mapSize.set(small ? 1024 : 2048, small ? 1024 : 2048);
+
+  Object.assign(key.shadow.camera, {
+    left: -6,
+    right: 6,
+    top: 6,
+    bottom: -6,
+    near: .5,
+    far: 25
+  });
+
+  key.shadow.bias = -.00035;
+  key.shadow.normalBias = .025;
+  key.shadow.radius = 4;
+  scene.add(key);
+
+  scene.add(new THREE.HemisphereLight(0x3a4454, 0x111318, .8));
+  scene.add(new THREE.AmbientLight(0xdccbb5, .18));
+
+  const rim = new THREE.SpotLight(
+    0xd4a359,
+    3.5,
+    35,
+    Math.PI / 4,
+    .8,
+    1
+  );
+
+  rim.position.set(-6, 8, -5);
+  rim.target.position.set(0, .5, 0);
+  scene.add(rim, rim.target);
+
+  // A generated studio reflection environment. No HDR or image is loaded.
+  const studio = new THREE.Scene();
+  studio.background = new THREE.Color(0x22252c);
+
+  const studioGeo = keep(new THREE.PlaneGeometry(12, 8));
+
+  for (const [position, color, intensity] of [
+    [[0, 9, 3], 0xfff0d9, 2.4],
+    [[-7, 4, 0], 0xc6d5ed, .55],
+    [[3, 4, -8], 0xffbe77, 1.2]
+  ]) {
+    const panel = new THREE.Mesh(
+      studioGeo,
+      keep(new THREE.MeshBasicMaterial({
+        color: new THREE.Color(color).multiplyScalar(intensity),
+        side: THREE.DoubleSide
+      }))
+    );
+
+    panel.position.fromArray(position);
+    panel.lookAt(0, 0, 0);
+    studio.add(panel);
+  }
+
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const environment = keep(pmrem.fromScene(studio, .055, .1, 100));
+
+  scene.environment = environment.texture;
+  scene.environmentIntensity = .4;
+  pmrem.dispose();
+
+  const random = seed => () => {
+    seed |= 0;
+    seed = seed + 0x6D2B79F5 | 0;
+
+    let n = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    n ^= n + Math.imul(n ^ n >>> 7, 61 | n);
+
+    return ((n ^ n >>> 14) >>> 0) / 4294967296;
+  };
+
+  const rand = random(714203);
+
+  function hash(x, y, period) {
+    x = ((x % period) + period) % period;
+    y = ((y % period) + period) % period;
+
+    let n = Math.imul(x + 71, 374761393) ^
+      Math.imul(y + 29, 668265263);
+
+    n = Math.imul(n ^ n >>> 13, 1274126177);
+
+    return ((n ^ n >>> 16) >>> 0) / 4294967295;
+  }
+
+  function noise(x, y, period) {
+    const a = Math.floor(x);
+    const b = Math.floor(y);
+
+    let u = x - a;
+    let v = y - b;
+
+    u = u * u * (3 - 2 * u);
+    v = v * v * (3 - 2 * v);
+
+    return THREE.MathUtils.lerp(
+      THREE.MathUtils.lerp(
+        hash(a, b, period),
+        hash(a + 1, b, period),
+        u
+      ),
+      THREE.MathUtils.lerp(
+        hash(a, b + 1, period),
+        hash(a + 1, b + 1, period),
+        u
+      ),
+      v
+    );
+  }
+
+  function textureSet(ceramic = false) {
+    const size = 512;
+    const colorCanvas = document.createElement('canvas');
+    const bumpCanvas = document.createElement('canvas');
+
+    colorCanvas.width = colorCanvas.height =
+      bumpCanvas.width = bumpCanvas.height = size;
+
+    const colorContext = colorCanvas.getContext('2d');
+    const bumpContext = bumpCanvas.getContext('2d');
+    const colorData = colorContext.createImageData(size, size);
+    const bumpData = bumpContext.createImageData(size, size);
+
+    for (let y = 0; y < size; y++) {
+      for (let x = 0; x < size; x++) {
+        const i = (y * size + x) * 4;
+        const u = x / size;
+        const v = y / size;
+
+        const n =
+          .53 * noise(u * 8, v * 8, 8) +
+          .3 * noise(u * 32, v * 32, 32) +
+          .17 * noise(u * 128, v * 128, 128);
+
+        const pore = rand() < (ceramic ? .035 : .018)
+          ? rand() * 45
+          : 0;
+
+        const base = (ceramic ? 202 : 220) + n * 32 - pore;
+
+        colorData.data[i] = Math.min(255, base + (ceramic ? 0 : 10));
+        colorData.data[i + 1] = base;
+        colorData.data[i + 2] = Math.max(0, base - (ceramic ? 0 : 14));
+        colorData.data[i + 3] = 255;
+
+        const bump = 180 + n * 65 - pore;
+        bumpData.data[i] = bump;
+        bumpData.data[i + 1] = bump;
+        bumpData.data[i + 2] = bump;
+        bumpData.data[i + 3] = 255;
+      }
+    }
+
+    colorContext.putImageData(colorData, 0, 0);
+    bumpContext.putImageData(bumpData, 0, 0);
+
+    if (ceramic) {
+      colorContext.strokeStyle = 'rgba(35,32,28,.14)';
+      colorContext.lineWidth = .65;
+
+      for (let k = 0; k < 13; k++) {
+        let x = rand() * size;
+        let y = rand() * size;
+
+        colorContext.beginPath();
+        colorContext.moveTo(x, y);
+
+        for (let j = 0; j < 5; j++) {
+          x += (rand() - .25) * 23;
+          y += (rand() - .35) * 19;
+          colorContext.lineTo(x, y);
+        }
+
+        colorContext.stroke();
+      }
+    }
+
+    const map = keep(new THREE.CanvasTexture(colorCanvas));
+    const bump = keep(new THREE.CanvasTexture(bumpCanvas));
+
+    map.colorSpace = THREE.SRGBColorSpace;
+
+    for (const texture of [map, bump]) {
+      texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+      texture.anisotropy = Math.min(
+        4,
+        renderer.capabilities.getMaxAnisotropy()
+      );
+    }
+
+    return { map, bump };
+  }
+
+  const baked = textureSet();
+  const ceramic = textureSet(true);
+
+  const cookieMaterial = keep(new THREE.MeshPhysicalMaterial({
+    color: 0xe09e53,
+    map: baked.map,
+    bumpMap: baked.bump,
+    bumpScale: .055,
+    roughnessMap: baked.bump,
+    roughness: .72,
+    metalness: .04,
+    sheen: .35,
+    sheenColor: 0xd4a359,
+    sheenRoughness: .85,
+    vertexColors: true
+  }));
+
+  const innerMaterial = keep(new THREE.MeshStandardMaterial({
+    color: 0xe9b976,
+    bumpMap: baked.bump,
+    bumpScale: .035,
+    roughness: .92,
+    side: THREE.DoubleSide
+  }));
+
+  const trayMaterial = keep(new THREE.MeshStandardMaterial({
+    color: 0x161920,
+    map: ceramic.map,
+    bumpMap: ceramic.bump,
+    bumpScale: .018,
+    roughness: .78,
+    metalness: .03
+  }));
+
+  const floorMaterial = keep(new THREE.MeshStandardMaterial({
+    color: 0x0c0e12,
+    roughness: 1,
+    metalness: 0
+  }));
+
+  const floor = new THREE.Mesh(
+    keep(new THREE.PlaneGeometry(120, 120)),
+    floorMaterial
+  );
+
+  floor.rotation.x = -Math.PI / 2;
+  floor.position.y = -.025;
+  floor.receiveShadow = true;
+  scene.add(floor);
+
+  const profile = [
+    [0, .09],
+    [3.2, .09],
+    [3.53, .12],
+    [3.70, .22],
+    [3.77, .37],
+    [3.75, .46],
+    [3.70, .50],
+    [3.64, .49],
+    [3.58, .43],
+    [3.47, .30],
+    [3.25, .26],
+    [0, .26]
+  ].map(([x, y]) => new THREE.Vector2(x, y));
+
+  const tray = new THREE.Mesh(
+    keep(new THREE.LatheGeometry(profile, 128)),
+    trayMaterial
+  );
+
+  tray.castShadow = tray.receiveShadow = true;
+  scene.add(tray);
+
+  const foot = new THREE.Mesh(
+    keep(new THREE.CylinderGeometry(2.95, 2.98, .09, 96)),
+    trayMaterial
+  );
+
+  foot.position.y = .03;
+  foot.castShadow = foot.receiveShadow = true;
+  scene.add(foot);
+
+  const rimMesh = new THREE.Mesh(
+    keep(new THREE.TorusGeometry(3.696, .012, 6, 160)),
+    keep(new THREE.MeshStandardMaterial({
+      color: 0x7a654a,
+      roughness: .67,
+      metalness: .25
+    }))
+  );
+
+  rimMesh.rotation.x = Math.PI / 2;
+  rimMesh.position.y = .495;
+  scene.add(rimMesh);
+
+  function radialTexture(rgb, alpha = .8) {
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 128;
+
+    const ctx = canvas.getContext('2d');
+    const gradient = ctx.createRadialGradient(64, 64, 3, 64, 64, 64);
+
+    gradient.addColorStop(0, `rgba(${rgb},${alpha})`);
+    gradient.addColorStop(.4, `rgba(${rgb},${alpha * .5})`);
+    gradient.addColorStop(1, `rgba(${rgb},0)`);
+
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 128, 128);
+
+    const texture = keep(new THREE.CanvasTexture(canvas));
+    texture.colorSpace = THREE.SRGBColorSpace;
+
+    return texture;
+  }
+
+  const shadowTexture = radialTexture('0,0,0', .85);
+  const haloTexture = radialTexture('212,163,89', .35);
+
+  const floorShadow = new THREE.Mesh(
+    keep(new THREE.PlaneGeometry(9, 8.6)),
+    keep(new THREE.MeshBasicMaterial({
+      map: shadowTexture,
+      transparent: true,
+      depthWrite: false,
+      opacity: .75
+    }))
+  );
+
+  floorShadow.rotation.x = -Math.PI / 2;
+  floorShadow.position.y = -.015;
+  scene.add(floorShadow);
+
+  // A folded, tapered wafer swept around a horseshoe. The cut is exactly x=0;
+  // independent halves share identical seam vertices until the fracture opens.
+  function waferPoint(u, v) {
+    const theta = u * 2.62;
+    const taper = Math.pow(
+      Math.max(0, Math.cos(u * Math.PI / 2)),
+      .5
+    );
+
+    const width = .34 * taper;
+    const height = .26 * taper;
+
+    // A lens section gives the wafer two pressed, crisp edges rather than
+    // the round cross-section of a croissant. A saddle pinches its middle.
+    const lens =
+      Math.sin((Math.cos(v) + 1) * Math.PI / 2) *
+      Math.sign(Math.sin(v));
+
+    const crease =
+      .09 *
+      Math.exp(-u * u / .013) *
+      Math.pow(Math.max(0, lens), 2);
+
+    return new THREE.Vector3(
+      .57 * Math.sin(theta) +
+        width * Math.cos(v) * Math.sin(theta),
+
+      .265 + .025 * Math.cos(u * Math.PI / 2) +
+        height * lens - crease,
+
+      -.45 * Math.cos(theta) + .12 -
+        width * Math.cos(v) * Math.cos(theta)
+    );
+  }
+
+  function waferGeometry(sign) {
+    const rows = 44;
+    const columns = 36;
+    const positions = [];
+    const uvs = [];
+    const colors = [];
+    const indices = [];
+
+    const base = new THREE.Color(0xffffff);
+    const toastColor = new THREE.Color(0x976139);
+
+    for (let row = 0; row <= rows; row++) {
+      for (let col = 0; col <= columns; col++) {
+        const u = sign * row / rows;
+        const v = col / columns * Math.PI * 2;
+        const p = waferPoint(u, v);
+
+        positions.push(p.x, p.y, p.z);
+        uvs.push((u + 1) * .5, col / columns);
+
+        const edge = Math.min(
+          .75,
+          .6 * Math.pow(Math.abs(u), 8) +
+          .24 * Math.pow(Math.max(0, -Math.cos(v)), 18) +
+          .1 * Math.pow(Math.max(0, Math.cos(v)), 14)
+        );
+
+        const color = base.clone().lerp(toastColor, edge);
+        colors.push(color.r, color.g, color.b);
+
+        if (row < rows && col < columns) {
+          const a = row * (columns + 1) + col;
+          const b = a + columns + 1;
+          const c = b + 1;
+          const d = a + 1;
+
+          if (sign > 0) {
+            indices.push(a, c, b, a, d, c);
+          } else {
+            indices.push(a, b, c, a, c, d);
+          }
+        }
+      }
+    }
+
+    const geometry = keep(new THREE.BufferGeometry());
+
+    geometry.setAttribute(
+      'position',
+      new THREE.Float32BufferAttribute(positions, 3)
+    );
+    geometry.setAttribute(
+      'uv',
+      new THREE.Float32BufferAttribute(uvs, 2)
+    );
+    geometry.setAttribute(
+      'color',
+      new THREE.Float32BufferAttribute(colors, 3)
+    );
+    geometry.setIndex(indices);
+    geometry.computeVertexNormals();
+
+    // Matching boundary normals prevent a lighting seam on the closed wafer.
+    const normals = geometry.attributes.normal;
+
+    for (let col = 0; col <= columns; col++) {
+      const n = new THREE.Vector3(
+        0,
+        normals.getY(col),
+        normals.getZ(col)
+      ).normalize();
+
+      normals.setXYZ(col, n.x, n.y, n.z);
+    }
+
+    return geometry;
+  }
+
+  function fractureCap() {
+    const vertices = [0, .29, -.33];
+    const uv = [.5, .5];
+    const indices = [];
+
+    for (let i = 0; i <= 36; i++) {
+      const v = i / 36 * Math.PI * 2;
+      const p = waferPoint(0, v);
+
+      vertices.push(p.x, p.y, p.z);
+      uv.push(.5 + .45 * Math.cos(v), .5 + .45 * Math.sin(v));
+
+      if (i < 36) indices.push(0, i + 1, i + 2);
+    }
+
+    const geometry = keep(new THREE.BufferGeometry());
+
+    geometry.setAttribute(
+      'position',
+      new THREE.Float32BufferAttribute(vertices, 3)
+    );
+    geometry.setAttribute(
+      'uv',
+      new THREE.Float32BufferAttribute(uv, 2)
+    );
+    geometry.setIndex(indices);
+    geometry.computeVertexNormals();
+
+    return geometry;
+  }
+
+  const leftGeometry = waferGeometry(-1);
+  const rightGeometry = waferGeometry(1);
+  const capGeometry = fractureCap();
+
+  const shadowGeometry = keep(new THREE.PlaneGeometry(1.9, 1.75));
+  const haloGeometry = keep(new THREE.PlaneGeometry(2.1, 1.9));
+
+  const cookies = [];
+  const pickMeshes = [];
+
+  for (let index = 0; index < 10; index++) {
+    const outer = index < 7;
+
+    const theta = outer
+      ? index / 7 * Math.PI * 2 + .19
+      : (index - 7) / 3 * Math.PI * 2 + .7;
+
+    const radius = outer ? 2.51 : 1.02;
+    const group = new THREE.Group();
+    const leftHalf = new THREE.Mesh(leftGeometry, cookieMaterial);
+    const rightHalf = new THREE.Mesh(rightGeometry, cookieMaterial);
+
+    leftHalf.name = 'leftHalf';
+    rightHalf.name = 'rightHalf';
+
+    for (const half of [leftHalf, rightHalf]) {
+      half.castShadow = half.receiveShadow = true;
+      half.userData.cookieID = index + 1;
+      half.add(new THREE.Mesh(capGeometry, innerMaterial));
+      group.add(half);
+      pickMeshes.push(half);
+    }
+
+    const x = Math.sin(theta) * radius;
+    const z = Math.cos(theta) * radius;
+    const scale = .83 + rand() * .07;
+    const rotation = -theta + (rand() - .5) * 1.25;
+
+    group.position.set(x, .24, z);
+    group.rotation.y = rotation;
+    group.scale.setScalar(scale);
+    scene.add(group);
+
+    const shadow = new THREE.Mesh(
+      shadowGeometry,
+      keep(new THREE.MeshBasicMaterial({
+        map: shadowTexture,
+        transparent: true,
+        depthWrite: false,
+        opacity: .34
+      }))
+    );
+
+    shadow.rotation.x = -Math.PI / 2;
+    shadow.rotation.z = -rotation;
+    shadow.position.set(x, .272, z);
+    scene.add(shadow);
+
+    const halo = new THREE.Mesh(
+      haloGeometry,
+      keep(new THREE.MeshBasicMaterial({
+        map: haloTexture,
+        transparent: true,
+        depthWrite: false,
+        opacity: 0,
+        blending: THREE.AdditiveBlending
+      }))
+    );
+
+    halo.rotation.x = -Math.PI / 2;
+    halo.position.set(x, .276, z);
+    scene.add(halo);
+
+    const labelCanvas = document.createElement('canvas');
+    labelCanvas.width = labelCanvas.height = 128;
+
+    const ctx = labelCanvas.getContext('2d');
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.font = '40px Menlo, Consolas, monospace';
+    ctx.fillStyle = '#cab18a';
+    ctx.fillText(String(index + 1).padStart(2, '0'), 64, 64);
+
+    const labelTexture = keep(new THREE.CanvasTexture(labelCanvas));
+    labelTexture.colorSpace = THREE.SRGBColorSpace;
+
+    const label = new THREE.Mesh(
+      keep(new THREE.PlaneGeometry(.28, .28)),
+      keep(new THREE.MeshBasicMaterial({
+        map: labelTexture,
+        transparent: true,
+        depthWrite: false,
+        opacity: .7,
+        toneMapped: false
+      }))
+    );
+
+    label.rotation.x = -Math.PI / 2;
+    label.position.set(x + .63, .279, z + .28);
+    scene.add(label);
+
+    cookies.push({
+      id: index + 1,
+      group,
+      leftHalf,
+      rightHalf,
+      shadow,
+      halo,
+      label,
+      base: { x, y: .24, z, rotation },
+      pose: {
+        lift: 0,
+        hover: 0,
+        crack: F.state.opened.has(index + 1) ? .07 : 0,
+        turn: 0
+      },
+      scale
+    });
+  }
+
+  const particleMesh = new THREE.InstancedMesh(
+    keep(new THREE.IcosahedronGeometry(1, 0)),
+    keep(new THREE.MeshStandardMaterial({
+      color: 0xd29954,
+      roughness: .9
+    })),
+    40
+  );
+
+  particleMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  particleMesh.castShadow = true;
+  particleMesh.visible = false;
+  particleMesh.frustumCulled = false;
+  scene.add(particleMesh);
+
+  const dummy = new THREE.Object3D();
+  const particles = [];
+
+  function burst(cookie) {
+    if (F.state.reduced) return;
+
+    particles.length = 0;
+    particleMesh.visible = true;
+    particleActive = true;
+
+    const origin = cookie.group.position.clone()
+      .add(new THREE.Vector3(0, .33, 0));
+
+    for (let i = 0; i < 40; i++) {
+      const a = rand() * Math.PI * 2;
+      const speed = .45 + rand() * 1.5;
+
+      particles.push({
+        p: origin.clone().add(new THREE.Vector3(
+          (rand() - .5) * .12,
+          0,
+          (rand() - .5) * .12
+        )),
+        v: new THREE.Vector3(
+          Math.cos(a) * speed,
+          1.2 + rand() * 1.8,
+          Math.sin(a) * speed
+        ),
+        r: new THREE.Euler(rand() * 6, rand() * 6, rand() * 6),
+        spin: new THREE.Vector3(rand() * 8, rand() * 8, rand() * 8),
+        s: .018 + rand() * .028,
+        sleep: false
+      });
+    }
+
+    updateParticles(0);
+  }
+
+  function updateParticles(dt) {
+    if (!particleActive) return;
+
+    let moving = false;
+
+    particles.forEach((p, index) => {
+      if (!p.sleep) {
+        p.v.y -= 9.8 * dt;
+        p.p.addScaledVector(p.v, dt);
+        p.r.x += p.spin.x * dt;
+        p.r.y += p.spin.y * dt;
+        p.r.z += p.spin.z * dt;
+
+        const distance = Math.hypot(p.p.x, p.p.z);
+        const floorY = distance < 3.42
+          ? .274
+          : distance < 3.76
+            ? .47
+            : 0;
+
+        if (p.p.y < floorY + p.s * .4) {
+          p.p.y = floorY + p.s * .4;
+
+          if (Math.abs(p.v.y) < .8) {
+            p.sleep = true;
+            p.v.set(0, 0, 0);
+          } else {
+            p.v.y = -p.v.y * .16;
+            p.v.x *= .5;
+            p.v.z *= .5;
+          }
+        }
+
+        moving ||= !p.sleep;
+      }
+
+      dummy.position.copy(p.p);
+      dummy.rotation.copy(p.r);
+      dummy.scale.set(p.s, p.s * .5, p.s * .78);
+      dummy.updateMatrix();
+
+      particleMesh.setMatrixAt(index, dummy.matrix);
+    });
+
+    particleMesh.instanceMatrix.needsUpdate = true;
+    particleActive = moving;
+  }
+
+  // One reusable ribbon and texture, not a new allocation per animation frame.
+  const paperGeometry = keep(new THREE.PlaneGeometry(4.2, 1.4, 36, 6));
+  const paperBase = paperGeometry.attributes.position.array.slice();
+
+  const paperMaterial = keep(new THREE.MeshBasicMaterial({
+    color: 0xffffff,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0,
+    toneMapped: false,
+    depthWrite: false
+  }));
+
+  const paper = new THREE.Mesh(paperGeometry, paperMaterial);
+  paper.visible = false;
+  paper.renderOrder = 5;
+  scene.add(paper);
+
+  const paperPose = { unfurl: 0, rise: 0 };
+  let paperTexture = null;
+
+  function drawPaper(entry) {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1536;
+    canvas.height = 512;
+
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#faf6ee';
+    ctx.fillRect(0, 0, 1536, 512);
+
+    const grain = random(915);
+
+    for (let i = 0; i < 4500; i++) {
+      ctx.fillStyle = `rgba(106,78,39,${grain() * .055})`;
+      ctx.fillRect(
+        grain() * 1536,
+        grain() * 512,
+        1 + grain() * 2,
+        1 + grain() * 2
+      );
+    }
+
+    ctx.strokeStyle = '#d8cdbb';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(25, 25, 1486, 462);
+
+    ctx.fillStyle = '#937951';
+    ctx.font = '22px Menlo, Consolas, monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(
+      `${F.t('paperBrand')} / ${String(entry.id).padStart(2, '0')}`,
+      70,
+      74
+    );
+
+    const words = F.field(entry, 'mantra').split(/\s+/);
+    let font = 58;
+    let lines = [];
+
+    do {
+      ctx.font = `${font}px Georgia, serif`;
+      lines = [];
+      let line = '';
+
+      for (const word of words) {
+        const next = line ? `${line} ${word}` : word;
+
+        if (ctx.measureText(next).width > 1380 && line) {
+          lines.push(line);
+          line = word;
+        } else {
+          line = next;
+        }
+      }
+
+      if (line) lines.push(line);
+      if (lines.length * font * 1.25 <= 282) break;
+
+      font -= 2;
+    } while (font >= 29);
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#3e3020';
+
+    const lineHeight = font * 1.25;
+    const start = 264 - (lines.length - 1) * lineHeight / 2;
+
+    lines.forEach((line, i) => {
+      ctx.fillText(line, 768, start + i * lineHeight);
+    });
+
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#937951';
+    ctx.font = '18px Menlo, Consolas, monospace';
+    ctx.fillText(
+      `${F.t('paperFoot')}  ·  ${String(entry.id).padStart(2, '0')} / 10`,
+      768,
+      463
+    );
+
+    if (paperTexture) {
+      paperTexture.dispose();
+      resources.delete(paperTexture);
+    }
+
+    paperTexture = keep(new THREE.CanvasTexture(canvas));
+    paperTexture.colorSpace = THREE.SRGBColorSpace;
+    paperTexture.anisotropy = Math.min(
+      4,
+      renderer.capabilities.getMaxAnisotropy()
+    );
+
+    paperMaterial.map = paperTexture;
+    paperMaterial.needsUpdate = true;
+  }
+
+  const dustCount = 50;
+  const dustPositions = new Float32Array(dustCount * 3);
+
+  for (let i = 0; i < dustCount; i++) {
+    dustPositions[i * 3] = (rand() - .5) * 11;
+    dustPositions[i * 3 + 1] = .4 + rand() * 5;
+    dustPositions[i * 3 + 2] = (rand() - .5) * 8;
+  }
+
+  const dustGeometry = keep(new THREE.BufferGeometry());
+  dustGeometry.setAttribute(
+    'position',
+    new THREE.BufferAttribute(dustPositions, 3)
+  );
+
+  const dust = new THREE.Points(
+    dustGeometry,
+    keep(new THREE.PointsMaterial({
+      color: 0xd4a359,
+      size: .016,
+      transparent: true,
+      opacity: .28,
+      depthWrite: false,
+      sizeAttenuation: true
+    }))
+  );
+
+  scene.add(dust);
+
+  function overview() {
+    const distance = Math.min(
+      14,
+      Math.max(10.8, 10.2 / camera.aspect)
+    );
+
+    return {
+      position: overviewDirection.clone()
+        .multiplyScalar(distance)
+        .add(new THREE.Vector3(0, .28, 0)),
+      target: new THREE.Vector3(0, .28, 0)
+    };
+  }
+
+  function stopTimeline() {
+    if (timeline) {
+      timeline.kill();
+      timeline = null;
+    }
+
+    controls.enableDamping = false;
+    controls.update();
+    controls.enableDamping = !F.state.reduced;
+  }
+
+  function clearSelection() {
+    for (const cookie of cookies) {
+      cookie.pose.lift = 0;
+      cookie.pose.crack = F.state.opened.has(cookie.id) ? .07 : 0;
+      cookie.pose.turn = 0;
+    }
+
+    paper.visible = false;
+    paperPose.unfurl = 0;
+    paperPose.rise = 0;
+  }
+
+  function select(id) {
+    stopTimeline();
+    clearSelection();
+
+    selected = cookies[id - 1];
+    hovered = null;
+    hideTooltip();
+
+    const cookie = selected;
+    const entry = F.data[id - 1];
+
+    drawPaper(entry);
+
+    const duration = F.state.reduced ? .001 : 1;
+    controls.enabled = false;
+    cookie.pose.crack = 0;
+
+    const target = new THREE.Vector3(
+      cookie.base.x,
+      1.16,
+      cookie.base.z
+    );
+
+    const direction = camera.position.clone()
+      .sub(controls.target)
+      .normalize();
+
+    direction.y = Math.max(.5, direction.y);
+    direction.normalize();
+
+    const zoomDist = F.state.cinema ? Math.max(7.8, 6.4 / camera.aspect) : Math.max(7.0, 5.6 / camera.aspect);
+    const position = target.clone().addScaledVector(
+      direction,
+      zoomDist
+    );
+
+    paper.visible = true;
+
+    timeline = gsap.timeline({
+      onComplete: () => {
+        controls.enabled = true;
+        timeline = null;
+      }
+    });
+
+    timeline.to(camera.position, {
+      x: position.x,
+      y: position.y,
+      z: position.z,
+      duration: .95 * duration,
+      ease: 'power2.inOut'
+    }, 0);
+
+    timeline.to(controls.target, {
+      x: target.x,
+      y: target.y,
+      z: target.z,
+      duration: .95 * duration,
+      ease: 'power2.inOut'
+    }, 0);
+
+    timeline.to(cookie.pose, {
+      lift: 1.2,
+      duration: .85 * duration,
+      ease: 'power2.inOut'
+    }, 0);
+
+    timeline.to(cookie.pose, {
+      crack: 1,
+      duration: .65 * duration,
+      ease: 'back.out(1.15)'
+    }, .62 * duration);
+
+    timeline.call(() => {
+      if (selected !== cookie) return;
+      F.markOpened(id);
+      F.Audio.crunch();
+      burst(cookie);
+    }, null, .63 * duration);
+
+    timeline.to(paperPose, {
+      unfurl: 1,
+      rise: 1,
+      duration: .85 * duration,
+      ease: 'power3.out'
+    }, .82 * duration);
+
+    timeline.call(() => {
+      if (selected === cookie) F.Audio.paper();
+    }, null, .84 * duration);
+  }
+
+  function close() {
+    stopTimeline();
+    selected = null;
+    hideTooltip();
+
+    const goal = overview();
+    const duration = F.state.reduced ? .001 : .8;
+
+    controls.enabled = false;
+
+    timeline = gsap.timeline({
+      onComplete: () => {
+        paper.visible = false;
+        controls.enabled = true;
+        timeline = null;
+      }
+    });
+
+    timeline.to(camera.position, {
+      x: goal.position.x,
+      y: goal.position.y,
+      z: goal.position.z,
+      duration,
+      ease: 'power2.inOut'
+    }, 0);
+
+    timeline.to(controls.target, {
+      x: 0,
+      y: .28,
+      z: 0,
+      duration,
+      ease: 'power2.inOut'
+    }, 0);
+
+    timeline.to(paperMaterial, {
+      opacity: 0,
+      duration: duration * .35
+    }, 0);
+
+    for (const cookie of cookies) {
+      timeline.to(cookie.pose, {
+        lift: 0,
+        crack: F.state.opened.has(cookie.id) ? .07 : 0,
+        turn: 0,
+        duration,
+        ease: 'power2.inOut'
+      }, 0);
+    }
+  }
+
+  function reset() {
+    particleMesh.visible = false;
+    particleActive = false;
+    particles.length = 0;
+
+    for (const cookie of cookies) {
+      cookie.pose.crack = 0;
+    }
+  }
+
+  function syncProgress() {
+    for (const cookie of cookies) {
+      if (cookie !== selected) {
+        cookie.pose.crack = F.state.opened.has(cookie.id) ? .07 : 0;
+      }
+    }
+  }
+
+  function resize() {
+    if (disposed || F.state.mode !== 'tray') return;
+
+    const rect = host.getBoundingClientRect();
+    if (rect.width < 1 || rect.height < 1) return;
+
+    camera.aspect = rect.width / rect.height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(rect.width, rect.height, false);
+
+    if (!selected && !timeline) {
+      const goal = overview();
+      camera.position.copy(goal.position);
+      controls.target.copy(goal.target);
+    } else if (selected && !timeline) {
+      const cookie = selected;
+      const target = new THREE.Vector3(cookie.base.x, 1.16, cookie.base.z);
+      const direction = camera.position.clone().sub(controls.target).normalize();
+      direction.y = Math.max(.5, direction.y);
+      direction.normalize();
+      const zoomDist = F.state.cinema ? Math.max(7.8, 6.4 / camera.aspect) : Math.max(7.0, 5.6 / camera.aspect);
+      camera.position.copy(target.clone().addScaledVector(direction, zoomDist));
+      controls.target.copy(target);
+    }
+  }
+
+  const resizeObserver = new ResizeObserver(resize);
+  resizeObserver.observe(host);
+
+  function hideTooltip() {
+    document.getElementById('tooltip').hidden = true;
+  }
+
+  function hit(event) {
+    const rect = renderer.domElement.getBoundingClientRect();
+
+    pointer.set(
+      (event.clientX - rect.left) / rect.width * 2 - 1,
+      -(event.clientY - rect.top) / rect.height * 2 + 1
+    );
+
+    raycaster.setFromCamera(pointer, camera);
+
+    return raycaster.intersectObjects(pickMeshes, false)[0]
+      ?.object.userData.cookieID ?? null;
+  }
+
+  function hover(id) {
+    hovered = id;
+    renderer.domElement.style.cursor = id ? 'pointer' : 'grab';
+  }
+
+  function onPointerMove(event) {
+    if (
+      pointerDown &&
+      Math.hypot(
+        event.clientX - pointerDown.x,
+        event.clientY - pointerDown.y
+      ) > 6
+    ) {
+      moved = true;
+    }
+
+    if (
+      event.pointerType === 'touch' ||
+      pointerIDs.size ||
+      !controls.enabled
+    ) return;
+
+    const id = hit(event);
+    hover(id);
+
+    const tooltip = document.getElementById('tooltip');
+
+    if (id && !F.state.cinema) {
+      tooltip.textContent =
+        `${String(id).padStart(2, '0')} — ${F.field(F.data[id - 1], 'title')}`;
+
+      tooltip.hidden = false;
+
+      tooltip.style.left = `${
+        Math.min(event.clientX + 16, innerWidth - tooltip.offsetWidth - 12)
+      }px`;
+
+      tooltip.style.top = `${
+        Math.min(event.clientY + 18, innerHeight - tooltip.offsetHeight - 12)
+      }px`;
+    } else {
+      hideTooltip();
+    }
+  }
+
+  function onPointerDown(event) {
+    if (event.button !== 0) return;
+
+    pointerIDs.add(event.pointerId);
+
+    if (pointerIDs.size > 1) multiTouch = true;
+
+    if (pointerIDs.size === 1) {
+      multiTouch = false;
+      moved = false;
+
+      pointerDown = {
+        id: event.pointerId,
+        x: event.clientX,
+        y: event.clientY,
+        time: performance.now(),
+        cookie: hit(event)
+      };
+    }
+
+    hideTooltip();
+  }
+
+  function onPointerUp(event) {
+    pointerIDs.delete(event.pointerId);
+
+    if (pointerDown?.id === event.pointerId) {
+      const valid =
+        !multiTouch &&
+        !moved &&
+        Math.hypot(
+          event.clientX - pointerDown.x,
+          event.clientY - pointerDown.y
+        ) < 7 &&
+        performance.now() - pointerDown.time < 700;
+
+      const id = valid ? hit(event) : null;
+
+      if (id && id === pointerDown.cookie) {
+        F.open(id);
+      }
+
+      pointerDown = null;
+    }
+
+    if (!pointerIDs.size) multiTouch = false;
+  }
+
+  function onPointerCancel(event) {
+    pointerIDs.delete(event.pointerId);
+    pointerDown = null;
+
+    if (!pointerIDs.size) multiTouch = false;
+
+    hideTooltip();
+  }
+
+  function onPointerLeave() {
+    if (!pointerIDs.size) {
+      hover(null);
+      hideTooltip();
+    }
+  }
+
+  renderer.domElement.addEventListener('pointermove', onPointerMove);
+  renderer.domElement.addEventListener('pointerdown', onPointerDown);
+  renderer.domElement.addEventListener('pointerleave', onPointerLeave);
+  renderer.domElement.addEventListener('contextmenu', event => event.preventDefault());
+
+  window.addEventListener('pointerup', onPointerUp);
+  window.addEventListener('pointercancel', onPointerCancel);
+
+  function contextLost(event) {
+    event.preventDefault();
+    lost = true;
+    F.fail('contextFail');
+    timeline?.pause();
+  }
+
+  function contextRestored() {
+    lost = false;
+    F.recover();
+    timeline?.resume();
+    resize();
+  }
+
+  renderer.domElement.addEventListener('webglcontextlost', contextLost, false);
+  renderer.domElement.addEventListener('webglcontextrestored', contextRestored, false);
+
+  function motionChanged() {
+    controls.enableDamping = !F.state.reduced;
+
+    if (F.state.reduced) {
+      timeline?.progress(1);
+      particleActive = false;
+      particleMesh.visible = false;
+    }
+
+    dust.rotation.y = 0;
+  }
+
+  function visibilityChanged() {
+    if (document.hidden) {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      timeline?.pause();
+    } else {
+      previous = performance.now();
+      timeline?.resume();
+
+      if (!raf) raf = requestAnimationFrame(frame);
+    }
+  }
+
+  function frame(now) {
+    if (disposed) return;
+
+    raf = requestAnimationFrame(frame);
+
+    const elapsed = now - previous;
+    previous = now;
+
+    const dt = Math.min(.035, Math.max(0, elapsed / 1000));
+
+    if (document.hidden || lost || F.state.mode !== 'tray') return;
+
+    controls.update();
+
+    for (const cookie of cookies) {
+      const desired = (
+        hovered === cookie.id &&
+        selected !== cookie &&
+        !F.state.reduced
+      ) ? .15 : 0;
+
+      cookie.pose.hover = F.state.reduced
+        ? 0
+        : THREE.MathUtils.damp(cookie.pose.hover, desired, 9, dt);
+
+      cookie.group.position.y =
+        cookie.base.y + cookie.pose.lift + cookie.pose.hover;
+
+      cookie.group.rotation.y =
+        cookie.base.rotation + cookie.pose.turn;
+
+      for (const [half, sign] of [
+        [cookie.leftHalf, -1],
+        [cookie.rightHalf, 1]
+      ]) {
+        half.position.x = sign * cookie.pose.crack * .40;
+        half.position.y = -cookie.pose.crack * .045;
+        half.rotation.z = -sign * cookie.pose.crack * .43;
+        half.rotation.y = sign * cookie.pose.crack * .08;
+      }
+
+      cookie.shadow.material.opacity =
+        .34 / (1 + cookie.pose.lift * 3 + cookie.pose.hover * 2);
+
+      cookie.shadow.scale.setScalar(1 + cookie.pose.lift * .12);
+
+      cookie.halo.material.opacity =
+        hovered === cookie.id
+          ? .35
+          : F.state.opened.has(cookie.id)
+            ? .055
+            : 0;
+
+      cookie.label.material.opacity =
+        hovered === cookie.id
+          ? .95
+          : (F.state.opened.has(cookie.id) ? .35 : 0);
+    }
+
+    updateParticles(dt);
+
+    if (selected && paper.visible) {
+      paper.position.set(
+        selected.group.position.x,
+        selected.group.position.y + .62 + paperPose.rise * .22,
+        selected.group.position.z + .08
+      );
+
+      paper.quaternion.copy(camera.quaternion);
+
+      paper.scale.set(
+        .035 + paperPose.unfurl * .965,
+        .85 + paperPose.unfurl * .15,
+        1
+      );
+
+      paperMaterial.opacity = paperPose.unfurl;
+
+      const position = paperGeometry.attributes.position;
+
+      for (let i = 0; i < position.count; i++) {
+        const x = paperBase[i * 3];
+        const y = paperBase[i * 3 + 1];
+
+        position.setXYZ(
+          i,
+          x,
+          y + .025 * Math.sin(x * 2),
+          .075 * Math.sin(x * 1.1) +
+            .5 * (1 - paperPose.unfurl) * Math.pow(x / 2.2, 2)
+        );
+      }
+
+      position.needsUpdate = true;
+    }
+
+    if (!F.state.reduced) {
+      dust.rotation.y += dt * .008;
+    }
+
+    renderer.render(scene, camera);
+
+    // Dynamic pixel density is a quality fallback, not an FPS guarantee.
+    frameCost = frameCost * .99 + elapsed * .01;
+    qualityFrames++;
+
+    if (qualityFrames > 240) {
+      if (frameCost > 28 && pixelRatio > 1) {
+        pixelRatio = Math.max(1, pixelRatio - .25);
+        renderer.setPixelRatio(pixelRatio);
+      }
+
+      qualityFrames = 0;
+    }
+  }
+
+  function dispose() {
+    if (disposed) return;
+
+    disposed = true;
+    if (raf) cancelAnimationFrame(raf);
+
+    stopTimeline();
+    resizeObserver.disconnect();
+    controls.dispose();
+
+    window.removeEventListener('pointerup', onPointerUp);
+    window.removeEventListener('pointercancel', onPointerCancel);
+
+    resources.forEach(resource => resource.dispose?.());
+    resources.clear();
+    renderer.dispose();
+  }
+
+  window.addEventListener('pagehide', event => {
+    if (!event.persisted) dispose();
+  });
+
+  resize();
+  motionChanged();
+  renderer.render(scene, camera);
+  raf = requestAnimationFrame(frame);
+
+  return {
+    select,
+    close,
+    reset,
+    hover,
+    resize,
+    syncProgress,
+    motionChanged,
+    visibilityChanged,
+    dispose,
+
+    languageChanged() {
+      if (selected) drawPaper(F.data[selected.id - 1]);
+      hideTooltip();
+    },
+
+    modeChanged() {
+      hideTooltip();
+      if (F.state.mode === 'tray') resize();
+    }
+  };
+}
+</script>
+</body>
+</html>
